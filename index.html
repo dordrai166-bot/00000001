@@ -341,8 +341,12 @@
             cookie: {
                 enabled:   true,  /* false = banner never appears */
                 scrollPct: 0.7,   /* pops after this share of the HERO is scrolled (0.7 = 70%) */
+                reachPad:  48,    /* safety net: px from the bottom that still counts as
+                                     "scrolled everything" — guarantees the banner ALWAYS
+                                     shows, even when the gate is unreachable (ultra-tall
+                                     monitors where the hero ≈ the whole screen) */
                 showDelay: '1.2s',/* slide-in delay once triggered  */
-                slideDur:  '.8s', /* slide speed (in & out)         */
+                slideDur:  '.8s', /* slide speed in (exit auto-runs faster — skill: exits snappier) */
                 width: 'min(26rem, calc(100vw - 2rem))',
                 gap:   '.55rem'
             }
@@ -1177,8 +1181,16 @@
             }
         }
 
+        /* Reduced motion = FEWER, gentler animations — durations AND delays
+           collapse (opacity/color transitions still happen instantly, so state
+           changes stay comprehensible; movement just stops travelling). */
         @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+            *, *::before, *::after {
+                transition-duration: .01ms !important;
+                transition-delay: .01ms !important;
+                animation-duration: .01ms !important;
+                animation-delay: .01ms !important;
+            }
         }
 
         main {
@@ -3016,8 +3028,8 @@
            ========================================================================== */
         :root { /* ↔ VALUES LIVE IN THE MASTER TUNING PANEL (DL_TUNE.cookie) */
             /* — cookie banner fine-tuning — */
-            --cookie-show-delay: 1.2s;     /* slide-in delay after the boot reveal */
-            --cookie-slide-dur: .8s;       /* slide speed (in & out) */
+            --cookie-show-delay: 1.2s;     /* slide-in delay once the scroll gate (or a safety net) fires */
+            --cookie-slide-dur: .8s;       /* slide speed IN (exit auto-runs at 55% of this, ease-out) */
             --cookie-width: min(26rem, calc(100vw - 2rem));
             --cookie-gap: .55rem;
         }
@@ -3040,8 +3052,13 @@
             transform: translateX(calc(-1 * (100% + 3rem)));   /* parked fully off the left edge */
             opacity: 0;
             pointer-events: none;
-            transition: transform var(--cookie-slide-dur) var(--ease-in-out),
-                        opacity .45s var(--ease-out);
+            /* BASE transition = the EXIT: deliberately ~2× faster than the graceful
+               entrance (skill rule — asymmetric timing: slow where the user decides,
+               fast where the system responds) and ease-out per the easing decision
+               tree (entering/exiting → ease-out). The entrance speed/delay lives on
+               .is-visible below; cookieHideMs() in the script reads the same vars. */
+            transition: transform calc(var(--cookie-slide-dur) * .55) var(--ease-out),
+                        opacity .3s var(--ease-out);
         }
 
         /* author display:flex above would beat the [hidden] UA rule — restore it */
@@ -3378,8 +3395,10 @@
          header straight to the content (i18n'd, slides in when focused) -->
     <a class="skip-link" href="#mainContent" data-i18n="skipToContent">Skip to main content</a>
 
-    <!-- COOKIE CONSENT — quiet slide-in card (enters LEFT → RIGHT after the boot
-         reveal; no overlay, never modal, never re-asks once answered).
+    <!-- COOKIE CONSENT — quiet slide-in card (enters LEFT → RIGHT once the visitor
+         scrolls ~70% into the page, or reaches the end of what's scrollable;
+         screens that can't scroll that far get it right after boot instead.
+         No overlay, never modal, never re-asks once answered).
          Choice is memorized in localStorage "dl-cookie-consent".
          To RE-SHOW it for testing: localStorage.removeItem('dl-cookie-consent') -->
     <div class="cookie-banner" id="cookieBanner" role="region" data-i18n-aria="cookieConsent" aria-label="Cookie consent" hidden>
@@ -4800,23 +4819,43 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
            once answered it is remembered FOREVER (localStorage "dl-cookie-consent"
            = "accepted" | "declined"); it never pops up again.
            Re-show for testing: localStorage.removeItem('dl-cookie-consent').
+           The gate has TWO invisible safety nets so the banner can NEVER soft-lock
+           (design-engineering rule: handle edge cases invisibly):
+             1) FLOOR CATCH — reaching (≈) the end of everything scrollable also
+                counts, so short page content can never strand the banner behind
+                an unreachable gate.
+             2) UNREACHABLE GATE — if the page can never scroll as far as the hero
+                gate (e.g. ultra-tall/4K windows where the hero ≈ the whole
+                screen), the banner simply appears right after boot, gate-free.
+           Nets arm only AFTER the boot gate + settle (services layout/fonts grow
+           the page), so they never fire early by mistake; re-checked on resize.
            Values come from the MASTER TUNING PANEL (DL_TUNE.cookie); the
            fallbacks here only fire if the panel is deleted. */
         const DL_COOKIE_TUNE = (window.DL_TUNE && window.DL_TUNE.cookie) || {};
         const COOKIE_BANNER_ENABLED = DL_COOKIE_TUNE.enabled !== undefined ? DL_COOKIE_TUNE.enabled : true;   // false = banner never appears at all
         const COOKIE_SCROLL_PCT = DL_COOKIE_TUNE.scrollPct !== undefined ? DL_COOKIE_TUNE.scrollPct : 0.7;    // share of the HERO height scrolled before the banner pops
+        const COOKIE_REACH_PAD = DL_COOKIE_TUNE.reachPad !== undefined ? DL_COOKIE_TUNE.reachPad : 48;        // px from the bottom that still counts as "scrolled everything"
         const cookieBanner = document.getElementById('cookieBanner');
         if (cookieBanner && COOKIE_BANNER_ENABLED) {
             let cookieConsent = null;
             try { cookieConsent = localStorage.getItem('dl-cookie-consent'); } catch (_) { /* private mode → ask every visit */ }
-            if (!cookieConsent) {
+            if (cookieConsent) {
+                /* One devtools line explaining the "banner never loads" mystery:
+                   a choice made ONCE (even while testing) is honoured forever. */
+                console.info('[Digi-Line] cookie banner skipped — stored consent "' + cookieConsent +
+                    '". To re-show it: localStorage.removeItem(\'dl-cookie-consent\')');
+            } else {
                 const heroEl = document.querySelector('.hero');
-                /* hero height is px-locked by lockHeroHeight — 0.7 × it = 70% scrolled
-                   down past the hero section on ANY display */
+                const scrollMax = () => Math.max(0,
+                    (document.documentElement.scrollHeight || (document.body && document.body.scrollHeight) || 0)
+                    - window.innerHeight);
                 let cookieShown = false;
+                let floorArmed = false;              // nets stay idle until the page has truly settled
                 const showCookieBanner = () => {
                     if (cookieShown) return;
                     cookieShown = true;
+                    window.removeEventListener('scroll', onCookieScroll);
+                    window.removeEventListener('resize', onCookieScroll);
                     (window.dlBootReady || Promise.resolve()).then(() => {
                         cookieBanner.hidden = false;
                         /* two frames so the hidden→visible change is applied before the
@@ -4827,21 +4866,45 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     });
                 };
                 const onCookieScroll = () => {
+                    if (cookieShown) return;
                     const heroH = heroEl ? (heroEl.getBoundingClientRect().height || 0) : 0;
-                    const threshold = (heroH || window.innerHeight) * COOKIE_SCROLL_PCT;
-                    if ((window.scrollY || document.documentElement.scrollTop || 0) >= threshold) {
-                        window.removeEventListener('scroll', onCookieScroll);
+                    const gate = (heroH || window.innerHeight) * COOKIE_SCROLL_PCT;
+                    /* effective trigger = the hero gate, clamped to what is actually
+                       scrollable (once armed): 0 → even a non-scrollable page pops */
+                    const trigger = floorArmed
+                        ? Math.min(gate, Math.max(0, scrollMax() - COOKIE_REACH_PAD))
+                        : gate;
+                    if ((window.scrollY || document.documentElement.scrollTop || 0) >= trigger) {
                         showCookieBanner();
                     }
                 };
                 window.addEventListener('scroll', onCookieScroll, { passive: true });
-                onCookieScroll();   /* a reload mid-page jumps straight past the threshold */
+                window.addEventListener('resize', onCookieScroll, { passive: true });
+                onCookieScroll();   /* a reload mid-page jumps straight past the gate */
+                /* arm the safety nets only after boot + a real layout settle — the
+                   services module sizes its viewport AFTER this script runs */
+                (window.dlBootReady || Promise.resolve()).then(() => {
+                    setTimeout(() => {
+                        if (cookieShown) return;
+                        floorArmed = true;
+                        onCookieScroll();   /* unreachable gate / tiny page → pops now */
+                    }, 300);
+                });
             }
+            /* exit is deliberately FASTER than the graceful entrance (skill rule:
+               asymmetric timing — slow where the user decides, fast where the
+               system responds), so the hide timer follows the exit duration */
+            const cookieHideMs = () => {
+                const raw = (getComputedStyle(document.documentElement).getPropertyValue('--cookie-slide-dur') || '').trim();
+                let s = parseFloat(raw) * (raw.endsWith('ms') ? .001 : 1);
+                if (!isFinite(s) || s <= 0) s = .8;
+                return Math.round(s * .55 * 1000) + 150;   /* exit runs at 55% of slideDur + margin */
+            };
             cookieBanner.querySelectorAll('[data-cookie-choice]').forEach(btn => {
                 btn.addEventListener('click', () => {
                     try { localStorage.setItem('dl-cookie-consent', btn.getAttribute('data-cookie-choice')); } catch (_) { }
-                    cookieBanner.classList.remove('is-visible');   // slides back out LEFT
-                    setTimeout(() => { cookieBanner.hidden = true; }, 900);
+                    cookieBanner.classList.remove('is-visible');   // slides back out LEFT (fast exit)
+                    setTimeout(() => { cookieBanner.hidden = true; }, cookieHideMs());
                 });
             });
             /* keyboard: Escape politely brushes the banner away without choosing
@@ -4849,7 +4912,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape' && !cookieBanner.hidden) {
                     cookieBanner.classList.remove('is-visible');
-                    setTimeout(() => { cookieBanner.hidden = true; }, 900);
+                    setTimeout(() => { cookieBanner.hidden = true; }, cookieHideMs());
                 }
             });
         }
@@ -5632,12 +5695,23 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             }
             window.addEventListener('load', relayoutSettled, { once: true });
 
-            /* Scroll-reveal: fade the cubes in, staggered, the first time the
-               services section enters the viewport — never again after that. */
+            /* Scroll-reveal: fade the cubes in, STAGGERED, the first time the
+               services section enters the viewport — never again after that.
+               (Design-engineering checklist: elements must never all pop on the
+               same frame — 30–80ms cascade via the shared servicesLayout.stagger
+               knob. The delay is decorative only, capped, and cleared right after
+               the fade so interactions NEVER wait on it; reduced-motion collapses
+               it via the global delay kill-switch.) */
+            const REVEAL_STAGGER_CAP = 275;   /* total cascade stays under ~0.3s even with many items */
             const revealObserver = new IntersectionObserver((entries, obs) => {
                 if (!entries.some(entry => entry.isIntersecting)) return;
+                services.forEach((s, i) => {
+                    s.el.style.transitionDelay = Math.min(i * STAGGER, REVEAL_STAGGER_CAP) + 'ms';
+                });
                 viewport.classList.remove('pre-reveal');
                 obs.disconnect();
+                setTimeout(() => services.forEach(s => { s.el.style.transitionDelay = ''; }),
+                    500 + REVEAL_STAGGER_CAP + 80);   /* longest fade + cascade + margin */
             }, { threshold: 0.15, rootMargin: '0px 0px -80px 0px' });
             revealObserver.observe(viewport);
         })();
