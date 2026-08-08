@@ -206,8 +206,8 @@
            • Numbers stay raw numbers (px/seconds per the comment nearby).
            • After a LIVE edit you can re-apply without reloading:
              run dlApplyTuning() in the devtools console.
-         Sections: site · hero · menu · heroControls · services ·
-                   servicesLayout · motion · portal · cookie
+         Sections: site · hero · heroText · menu · heroControls · services ·
+                   servicesLayout · motion · portal · cookie · boot · search · micro
          ══════════════════════════════════════════════════════════════════════ -->
     <script>
     (function () {
@@ -236,7 +236,17 @@
                 textMaxWidthMobile:'min(96cqi, 34rem)',            /* greeting column cap (phone)    */
                 textInset:         'clamp(0rem, 1.2cqi, 1.4rem)',  /* desktop gutter beside the text */
                 textInsetMobile:   '.15rem',                       /* phone gutter beside the text   */
-                messageDelay:      '1500ms'                        /* hold time per greeting phase   */
+                messageDelay:      '1500ms',                       /* hold time per greeting phase   */
+                mascotInDur:       '.9s',      /* mascot entrance animation duration */
+                mascotInDelay:     '.1s',      /* mascot entrance start delay        */
+                orientationSettleMs: 350       /* rotate-device settle before the hero re-measures itself */
+            },
+
+            /* ── HERO TEXT PHASES (greeting/prompt fly in & out) ─────────── */
+            heroText: {
+                inDurMs:       900,   /* fly-up entrance duration per phase             */
+                outDurMs:      620,   /* fly-up exit duration per phase                 */
+                pairStaggerMs: 42     /* left/right message offset (both hero columns)  */
             },
 
             /* ── LIQUID GLASS MENU BAR (hero) ──────────────────────────── */
@@ -253,7 +263,9 @@
                 transitionEase:     'var(--ease-spring)',
                 loadingDelay:  '1600ms',       /* how long the loading cube shows before becoming the rectangle */
                 entranceDelay: '1300ms',       /* delay before the menu appears on page load */
-                fadeDuration:  '0.5s'          /* initial fade-in speed */
+                fadeDuration:  '0.5s',         /* initial fade-in speed */
+                contentFade:      '0.4s',      /* inner text/view cross-fade speed (loading → passive → active) */
+                contentFadeDelay: '0.15s'      /* pause before the new view's text starts fading in */
             },
 
             /* ── MOBILE HERO CONTROLS (theme pair / language popup, ≤42rem) ── */
@@ -293,7 +305,10 @@
 
             /* ── SERVICES LAYOUT ENGINE (JS — sizes, tray, rails, video) ─ */
             servicesLayout: {
-                stagger:      55,    /* ms cascade between rail/tray items */
+                gridStagger:    18,    /* ms cascade per cube in the passive grid */
+                stagger:        55,    /* ms cascade between rail/tray items */
+                railDelayBase:  120,   /* base ms before the rail/tray cascade starts during a morph */
+                revealStaggerCap: 275, /* total cascade cap for the first scroll-in reveal (ms) */
                 itemMin:      150,   /* smallest passive cube (px) */
                 itemMax:      240,   /* largest passive cube (px)  */
                 colsMax:      6,     /* max passive grid columns   */
@@ -303,15 +318,22 @@
                 passiveMaxW:  1200,  /* width cap for the passive grid area (px, ≈75rem) */
                 trayPerRow:   4,     /* PHONE: tray chips per row under an open panel */
                 trayGap:      14,    /* PHONE: gap between tray chips (px) */
+                scrollFollowUpMs: 220, /* first auto-scroll re-check after an expand/collapse starts */
+                videoLeadFrac:  0.55,  /* YouTube iframe starts loading after this share of the morph… */
+                videoLeadMaxMs: 520,   /* …but never later than this (keeps video weight off the flight) */
                 ytParams:     '?autoplay=1&mute=0&enablejsapi=1&rel=0'  /* YouTube embed params */
             },
 
             /* ── MOTION / ANIMATION (the service morph engine) ─────────── */
             motion: {
-                svcAnimMs: 780,     /* base FLIP morph duration in ms                     */
+                svcAnimMs: 1000,    /* THE SWAP SPEED — full settle time of the service
+                                       morph spring in ms. The spring is normalized to this
+                                       whole duration (same animation, just as slow as you
+                                       dial it): raise for an even slower, dreamier swap,
+                                       lower for a snappier one.                             */
                 timeScale: 1,       /* GLOBAL speed multiplier — 2 = twice as slow, 0.5 = twice as fast.
                                        Because the morph is a sampled physics curve, it stays
-                                       perfectly smooth even at timeScale 1000 (0.1% speed).   */
+                                       perfectly smooth even at timeScale 1000 (0.01% speed).  */
                 useSpring: true,    /* true = physics spring morph; false = services.ease bezier.
                                        Springs auto-fall back to the bezier on old browsers.   */
                 spring: {
@@ -345,10 +367,30 @@
                                      "scrolled everything" — guarantees the banner ALWAYS
                                      shows, even when the gate is unreachable (ultra-tall
                                      monitors where the hero ≈ the whole screen) */
+                settleArmMs: 300, /* boot-settle pause before the never-miss safety nets arm */
                 showDelay: '1.2s',/* slide-in delay once triggered  */
                 slideDur:  '.8s', /* slide speed in (exit auto-runs faster — skill: exits snappier) */
                 width: 'min(26rem, calc(100vw - 2rem))',
                 gap:   '.55rem'
+            },
+
+            /* ── BOOT LOADER (opening veil + worm-in-ring spinner) ──────── */
+            boot: {
+                hardCapMs: 5000,  /* max wait for the two mascot pictures, then reveal anyway */
+                veilFadeMs: 500,  /* veil fade-out speed (site reveal; removal follows +150ms) */
+                spinDur:   '3s'   /* one full worm-in-ring spin cycle (boot + portal handoff)  */
+            },
+
+            /* ── HEADER SEARCH ──────────────────────────────────────────── */
+            search: {
+                processingMs: 1000, /* pause in the "processing" state after submitting */
+                spinDur:      '.6s' /* search icon spin cycle while processing          */
+            },
+
+            /* ── MICRO INTERACTIONS (every pressable: buttons, visits, pills) ── */
+            micro: {
+                pressDur: '.16s', /* :active press-scale speed (ALL buttons on the site) */
+                hoverDur: '.25s'  /* hover shadow/border swap speed (ALL buttons)        */
             }
         };
 
@@ -356,8 +398,16 @@
         const root = document.documentElement;
         const setV = (el, name, val) => { if (el && val !== undefined && val !== null) el.style.setProperty(name, String(val)); };
 
-        /* Physics spring → CSS linear() easing: a CONTINUOUS sampled curve, so
-           the morph reads as perfectly smooth at ANY timeScale. */
+        /* Physics spring → CSS linear() easing, TWO phases:
+             1) simulate the REAL spring in physical time until it truly settles
+                (mass/stiffness/damping keep their exact feel),
+             2) stretch that exact curve across the WHOLE duration
+                (svcAnimMs × timeScale). Without phase 2 the spring settled at its
+                own physical speed (~0.3s) and sat frozen for the rest of the
+                duration — that is why a swap looked near-instant at any tuning.
+                Now duration = true settle time: the SAME animation, as slow as
+                you dial it, and still a CONTINUOUS sampled curve — smooth even
+                at timeScale 1000 (0.01% speed). */
         const springCache = {};
         window.dlSpringSupported = !!(window.CSS && CSS.supports && CSS.supports('transition-timing-function', 'linear(0, 1)'));
         window.dlSpringEasing = function () {
@@ -366,16 +416,25 @@
             const samples = Math.max(16, Math.min(120, cfg.samples ?? 48));
             const key = [mass, stiffness, damping, samples].join('/');
             if (springCache[key]) return springCache[key];
-            const sub = 8, n = samples * sub, dt = 1 / n;
-            let x = 0, v = 0, settledAt = n;
-            const pts = ['0 0%'];
-            for (let i = 1; i <= n; i++) {
+            const dt = 1 / 600;                       /* physical-time sim step (~1.7ms) */
+            let x = 0, v = 0;
+            const xs = [0];
+            for (let i = 1; i <= 6000; i++) {          /* up to 10s — any spring config settles */
                 v += ((-stiffness * (x - 1) - damping * v) / mass) * dt;
                 x += v * dt;
-                if (i % sub === 0) pts.push(x.toFixed(5) + ' ' + (i / n * 100).toFixed(2) + '%');
-                if (Math.abs(x - 1) < 0.0005 && Math.abs(v) < 0.005) { settledAt = i; break; }
+                xs.push(x);
+                if (Math.abs(x - 1) < 0.0005 && Math.abs(v) < 0.005) break;
             }
-            pts.push('1 ' + Math.min(100, settledAt / n * 100).toFixed(2) + '%', '1 100%');
+            const pts = ['0 0%'];
+            const last = xs.length - 1;
+            for (let sIdx = 1; sIdx < samples; sIdx++) {
+                const p = sIdx / samples;
+                const fi = p * last;
+                const i0 = Math.floor(fi), f = fi - i0;
+                const val = i0 >= last ? xs[last] : xs[i0] + (xs[i0 + 1] - xs[i0]) * f;
+                pts.push(val.toFixed(5) + ' ' + (p * 100).toFixed(2) + '%');
+            }
+            pts.push('1 100%');
             return (springCache[key] = 'linear(' + pts.join(', ') + ')');
         };
 
@@ -384,7 +443,14 @@
            menu / hero-controls / cookie sections repaint too. */
         function applyTuningRoot() {
             const T = window.DL_TUNE, m = T.menu || {}, hc = T.heroControls || {}, c = T.cookie || {};
+            const b = T.boot || {}, sr = T.search || {}, mc = T.micro || {};
             const map = {
+                /* boot / search / micro → pure CSS timing vars */
+                '--boot-veil-fade': b.veilFadeMs != null ? (b.veilFadeMs / 1000) + 's' : undefined,
+                '--boot-spin-dur': b.spinDur,
+                '--finder-spin-dur': sr.spinDur,
+                '--menu-content-fade': m.contentFade, '--menu-content-fade-delay': m.contentFadeDelay,
+                '--micro-press-dur': mc.pressDur, '--micro-hover-dur': mc.hoverDur,
                 '--menu-left-desktop': m.leftDesktop, '--menu-bottom-desktop': m.bottomDesktop, '--menu-scale-desktop': m.scaleDesktop,
                 '--menu-left-mobile': m.leftMobile, '--menu-bottom-mobile': m.bottomMobile, '--menu-scale-mobile': m.scaleMobile,
                 '--menu-passive-width': m.passiveWidth, '--menu-passive-height': m.passiveHeight, '--menu-passive-padding': m.passivePadding,
@@ -425,6 +491,8 @@
                 setV(heroEl, '--hero-text-inset', isPhone ? h.textInsetMobile : h.textInset);
                 setV(heroEl, '--hero-text-max-width', isPhone ? h.textMaxWidthMobile : h.textMaxWidth);
                 setV(heroEl, '--message-delay', h.messageDelay);
+                setV(heroEl, '--mascot-in-dur', h.mascotInDur);
+                setV(heroEl, '--mascot-in-delay', h.mascotInDelay);
             }
             const s = T.services || {};
             if (svcEl) {
@@ -601,7 +669,7 @@
             box-shadow:
                 calc(var(--u)*.45) calc(var(--u)*.45) calc(var(--u)*.7) -2px var(--shadow-dark),
                 calc(var(--u)*-.35) calc(var(--u)*-.35) calc(var(--u)*.7) -2px var(--shadow-light);
-            transition: box-shadow .25s var(--ease-out), border-color .25s var(--ease-out), background-color .25s var(--ease-out), transform .16s var(--ease-out);
+            transition: box-shadow var(--micro-hover-dur, .25s) var(--ease-out), border-color var(--micro-hover-dur, .25s) var(--ease-out), background-color var(--micro-hover-dur, .25s) var(--ease-out), transform var(--micro-press-dur, .16s) var(--ease-out);
             display: flex;
             align-items: center;
             gap: calc(var(--u)*.4);
@@ -844,7 +912,7 @@
 
         .finder.processing .finder__icon {
             transform-origin: 50%;
-            animation: spinner .6s linear infinite;
+            animation: spinner var(--finder-spin-dur, .6s) linear infinite;
         }
 
         @keyframes spinner {
@@ -868,7 +936,7 @@
             box-shadow:
                 calc(var(--u)*.45) calc(var(--u)*.45) calc(var(--u)*.7) -2px var(--shadow-dark),
                 calc(var(--u)*-.35) calc(var(--u)*-.35) calc(var(--u)*.7) -2px var(--shadow-light);
-            transition: box-shadow .25s var(--ease-out), border-color .25s var(--ease-out), background-color .25s var(--ease-out), transform .16s var(--ease-out);
+            transition: box-shadow var(--micro-hover-dur, .25s) var(--ease-out), border-color var(--micro-hover-dur, .25s) var(--ease-out), background-color var(--micro-hover-dur, .25s) var(--ease-out), transform var(--micro-press-dur, .16s) var(--ease-out);
         }
 
         .icon-btn:hover {
@@ -1361,7 +1429,7 @@
             filter: drop-shadow(0 2rem 2rem rgba(0,0,0,.22));
             opacity: 0;
             transform: translateY(2rem) scale(var(--mascot-active-scale));
-            animation: mascot-in .9s .1s cubic-bezier(.23, 1, .32, 1) forwards;
+            animation: mascot-in var(--mascot-in-dur, .9s) var(--mascot-in-delay, .1s) cubic-bezier(.23, 1, .32, 1) forwards;
         }
 
         @keyframes mascot-in { to { opacity: 1; transform: translateY(0) scale(var(--mascot-active-scale)); } }
@@ -1622,7 +1690,7 @@
             pointer-events: auto;
             flex: 1;
             min-width: 0;
-            transition: opacity 0.4s ease 0.15s;
+            transition: opacity var(--menu-content-fade, .4s) ease var(--menu-content-fade-delay, .15s);
         }
 
         .menu-title {
@@ -1672,7 +1740,7 @@
             opacity: 1;
             visibility: visible;
             pointer-events: auto;
-            transition: opacity 0.4s ease 0.15s;
+            transition: opacity var(--menu-content-fade, .4s) ease var(--menu-content-fade-delay, .15s);
         }
 
         .menu-title-active {
@@ -1754,7 +1822,7 @@
                         inset 1.5px -1.5px 4px 0 rgba(255, 255, 255, .2),
                         0 0 0 1px rgba(255, 255, 255, .4),
                         0 6px 18px -6px rgba(0, 0, 0, .25);
-            transition: transform .18s var(--ease-out), box-shadow .25s var(--ease-out), background-color .4s ease, color .15s ease;
+            transition: transform var(--micro-press-dur, .16s) var(--ease-out), box-shadow var(--micro-hover-dur, .25s) var(--ease-out), background-color .4s ease, color .15s ease;
         }
 
         :root[data-theme="dark"] .menu-visit {
@@ -1947,7 +2015,7 @@
                         padding var(--menu-transition-duration) var(--menu-transition-ease),
                         opacity var(--menu-fade-duration) ease,
                         transform var(--menu-transition-duration) var(--menu-transition-ease),
-                        background 0.4s ease, color 0.4s ease, border-color 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out);
+                        background 0.4s ease, color 0.4s ease, border-color var(--micro-hover-dur, .25s) var(--ease-out), box-shadow var(--micro-hover-dur, .25s) var(--ease-out);
         }
 
         /* States matching the liquid glass menu animation */
@@ -1998,7 +2066,7 @@
             flex: 1;
             min-width: 0;
             text-align: center;
-            transition: opacity 0.4s ease 0.15s;
+            transition: opacity var(--menu-content-fade, .4s) ease var(--menu-content-fade-delay, .15s);
         }
 
         @media (hover: hover) and (pointer: fine) {
@@ -2086,7 +2154,7 @@
             cursor: pointer;
             box-shadow: 6px 6px 14px -3px var(--hero-shadow-dark),
                         -5px -5px 12px -3px var(--hero-shadow-light);
-            transition: box-shadow .15s ease, transform .15s ease;
+            transition: box-shadow var(--micro-hover-dur, .25s) ease, transform var(--micro-press-dur, .16s) ease;
         }
         .hero-theme-toggle:active,
         .hero-lang__btn:active { transform: scale(.93); }
@@ -2225,7 +2293,7 @@
            ========================================================================== */
         .services {
             --svc-ease: cubic-bezier(.22, 1, .36, 1);   /* transform-only FLIP morph for service expand/collapse */
-            --svc-dur: .78s;
+            --svc-dur: 1s;   /* inert fallback — the MASTER TUNING PANEL (motion.svcAnimMs) publishes the real value */
             --svc-btn-radius: clamp(1rem, 1.5vw, 1.4rem);
             --svc-panel-radius: 1.75rem;
             --svc-btn-padding: 12px;   /* inner spacing of the passive cube button */
@@ -2423,7 +2491,7 @@
             /* the viewport's height travels on the SAME duration & curve as the
                card morph (var-driven from the MASTER TUNING PANEL), so the
                footer shadow-chase below is one coherent motion, not a chase */
-            transition: height var(--svc-dur, .78s) var(--svc-ease, var(--ease-out));
+            transition: height var(--svc-dur, 1s) var(--svc-ease, var(--ease-out));
         }
 
         @media (max-width: 42rem) {
@@ -2763,7 +2831,7 @@
             text-decoration: none;
             box-shadow: 6px 6px 10px -2px var(--svc-shadow-dark),
                         -4px -4px 10px -1px var(--svc-shadow-light);
-            transition: box-shadow .25s var(--ease-out), border-color .25s var(--ease-out), transform .16s var(--ease-out);
+            transition: box-shadow var(--micro-hover-dur, .25s) var(--ease-out), border-color var(--micro-hover-dur, .25s) var(--ease-out), transform var(--micro-press-dur, .16s) var(--ease-out);
         }
 
         .service__visit:hover { box-shadow: none; border-color: var(--hover-border); }
@@ -2882,7 +2950,7 @@
             box-shadow:
                 calc(var(--u)*.45) calc(var(--u)*.45) calc(var(--u)*.7) -2px var(--shadow-dark),
                 calc(var(--u)*-.35) calc(var(--u)*-.35) calc(var(--u)*.7) -2px var(--shadow-light);
-            transition: box-shadow .25s var(--ease-out), border-color .25s var(--ease-out), transform .16s var(--ease-out), color .15s ease;
+            transition: box-shadow var(--micro-hover-dur, .25s) var(--ease-out), border-color var(--micro-hover-dur, .25s) var(--ease-out), transform var(--micro-press-dur, .16s) var(--ease-out), color .15s ease;
         }
 
         .footer-link:hover { box-shadow: none; border-color: var(--hover-border); }
@@ -2932,7 +3000,7 @@
             box-shadow:
                 calc(var(--u)*.45) calc(var(--u)*.45) calc(var(--u)*.7) -2px var(--shadow-dark),
                 calc(var(--u)*-.35) calc(var(--u)*-.35) calc(var(--u)*.7) -2px var(--shadow-light);
-            transition: box-shadow .25s var(--ease-out), border-color .25s var(--ease-out), transform .16s var(--ease-out);
+            transition: box-shadow var(--micro-hover-dur, .25s) var(--ease-out), border-color var(--micro-hover-dur, .25s) var(--ease-out), transform var(--micro-press-dur, .16s) var(--ease-out);
         }
 
         .footer-social__btn:hover {
@@ -3104,7 +3172,7 @@
             box-shadow:
                 calc(var(--u)*.45) calc(var(--u)*.45) calc(var(--u)*.7) -2px var(--shadow-dark),
                 calc(var(--u)*-.35) calc(var(--u)*-.35) calc(var(--u)*.7) -2px var(--shadow-light);
-            transition: box-shadow .25s var(--ease-out), border-color .25s var(--ease-out), transform .16s var(--ease-out), color .15s ease;
+            transition: box-shadow var(--micro-hover-dur, .25s) var(--ease-out), border-color var(--micro-hover-dur, .25s) var(--ease-out), transform var(--micro-press-dur, .16s) var(--ease-out), color .15s ease;
         }
 
         .cookie-banner__btn:hover { box-shadow: none; border-color: var(--hover-border); }
@@ -3204,7 +3272,8 @@
             display: grid;
             place-items: center;
             background: var(--panel); /* == Visit button background, light & dark */
-            transition: opacity .5s var(--ease-out);
+            /* ↔ fade speed lives in the MASTER TUNING PANEL (boot.veilFadeMs) */
+            transition: opacity var(--boot-veil-fade, .5s) var(--ease-out);
         }
 
         .boot-loader.is-done { opacity: 0; pointer-events: none; }
@@ -3217,7 +3286,7 @@
             width: clamp(5rem, 12vmin, 8rem);
             height: auto;
             display: block;
-            animation: boot-bump 3s linear infinite;
+            animation: boot-bump var(--boot-spin-dur, 3s) linear infinite;
         }
 
         .pl__ring { stroke: rgba(41, 41, 41, .09); }
@@ -3225,7 +3294,7 @@
         :root[data-theme="dark"] .pl__ring { stroke: rgba(238, 240, 245, .09); }
 
         .pl__worm {
-            animation: boot-worm 3s cubic-bezier(.42, .17, .75, .83) infinite;
+            animation: boot-worm var(--boot-spin-dur, 3s) cubic-bezier(.42, .17, .75, .83) infinite;
         }
 
         /* Never strobe under reduced motion (the global kill-switch only shortens
@@ -3775,6 +3844,11 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
            soft-lock on a missing asset.
            ========================================================================== */
         (function () {
+            /* ↔ THE NUMBERS LIVE IN THE MASTER TUNING PANEL (DL_TUNE.boot) —
+               fallbacks here only fire if the panel is deleted. */
+            var DL_BOOT_TUNE = (window.DL_TUNE && window.DL_TUNE.boot) || {};
+            var BOOT_HARD_CAP = DL_BOOT_TUNE.hardCapMs !== undefined ? DL_BOOT_TUNE.hardCapMs : 5000;
+            var BOOT_VEIL_FADE = DL_BOOT_TUNE.veilFadeMs !== undefined ? DL_BOOT_TUNE.veilFadeMs : 500;
             var veil = document.getElementById('bootLoader');
             var revealed = false;
 
@@ -3783,8 +3857,8 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                 revealed = true;
                 document.documentElement.classList.remove('booting'); /* lets the hero mascot entrance play */
                 if (!veil) return;
-                veil.classList.add('is-done');                         /* fade out */
-                setTimeout(function () { veil.remove(); }, 650);       /* then drop it from the DOM/paint */
+                veil.classList.add('is-done');                         /* fade out (--boot-veil-fade in CSS) */
+                setTimeout(function () { veil.remove(); }, BOOT_VEIL_FADE + 150); /* then drop it from the DOM/paint */
             }
 
             function loadImage(src) {
@@ -3811,10 +3885,10 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                 : 'leaning.webp';
 
             var gate = Promise.all([
-                loadImage('elements/seperate_element/hero.webp'),
+                loadImage('hero.webp'),
                 loadImage(leaningSrc)
             ]);
-            var hardCap = new Promise(function (resolve) { setTimeout(resolve, 5000); });
+            var hardCap = new Promise(function (resolve) { setTimeout(resolve, BOOT_HARD_CAP); });
 
             window.dlBootReady = Promise.race([gate, hardCap]);
             window.dlBootReady.then(reveal);
@@ -4194,6 +4268,10 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
            re-freezes on genuine size changes (width change / rotation) — never
            from the address bar collapsing. */
         (function lockHeroHeight() {
+            /* re-count settle after a device rotation — MASTER TUNING PANEL
+               (DL_TUNE.hero.orientationSettleMs) */
+            const ORIENT_SETTLE = (window.DL_TUNE && window.DL_TUNE.hero && window.DL_TUNE.hero.orientationSettleMs !== undefined)
+                ? window.DL_TUNE.hero.orientationSettleMs : 350;
             const hero = document.querySelector('.hero');
             if (!hero) return;
             const header = document.getElementById('siteHeader');
@@ -4218,7 +4296,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                 const w = document.documentElement.clientWidth;
                 if (w !== lastW) { lastW = w; apply(); }   /* width change = real layout change */
             }, { passive: true });
-            window.addEventListener('orientationchange', () => setTimeout(apply, 350), { passive: true });
+            window.addEventListener('orientationchange', () => setTimeout(apply, ORIENT_SETTLE), { passive: true });
         })();
 
         function localGreeting(lang) {
@@ -4252,6 +4330,13 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
         const HERO_IN_FROM = { opacity: '0', transform: 'translate3d(0px, 120%, 0px)', filter: 'blur(8px)' };
         const HERO_IN_TO = { opacity: '1', transform: 'translate3d(0px, 0px, 0px)', filter: 'blur(0px)' };
         const HERO_OUT_TO = { opacity: '0', transform: 'translate3d(0px, -130%, 0px)', filter: 'blur(7px)' };
+
+        /* Phase TIMING lives in the MASTER TUNING PANEL (DL_TUNE.heroText) —
+           easings stay as tuned here; these consts only read durations/stagger. */
+        const HT = (window.DL_TUNE && window.DL_TUNE.heroText) || {};
+        const HERO_IN_MS = HT.inDurMs !== undefined ? HT.inDurMs : 900;
+        const HERO_OUT_MS = HT.outDurMs !== undefined ? HT.outDurMs : 620;
+        const HERO_PAIR_STAGGER = HT.pairStaggerMs !== undefined ? HT.pairStaggerMs : 42;
 
         // Reads an element's exact current on-screen state (mid-animation included),
         // normalised so the values can be reused directly as keyframes/inline styles.
@@ -4287,15 +4372,15 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             const timing = reducedMotionQuery.matches
                 ? { duration: 1, easing: 'linear', fill: 'forwards' }
                 : entering
-                    ? { duration: 900, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'forwards' }
-                    : { duration: 620, easing: 'cubic-bezier(.7, 0, .84, 0)', fill: 'forwards' };
+                    ? { duration: HERO_IN_MS, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'forwards' }
+                    : { duration: HERO_OUT_MS, easing: 'cubic-bezier(.7, 0, .84, 0)', fill: 'forwards' };
             return Promise.all(elements.map((element, index) => {
                 // Entering always rises from the known hidden state (text is swapped while
                 // hidden). Exiting starts from the element's exact current frame, so an
                 // interruption mid-animation continues seamlessly — no snap, no blink.
                 const from = entering ? HERO_IN_FROM : heroSnapshot(element);
                 const to = entering ? HERO_IN_TO : HERO_OUT_TO;
-                const animation = element.animate([from, to], { ...timing, delay: index * 42 });
+                const animation = element.animate([from, to], { ...timing, delay: index * HERO_PAIR_STAGGER });
                 return animation.finished.then(() => {
                     // Flatten the end state to inline styles and release the fill, so
                     // fills never stack up across sequences and later cancels are silent.
@@ -4514,6 +4599,10 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
 
         window.matchMedia('(max-width: 42rem)').addEventListener('change', () => runHeroSequence(document.documentElement.lang || 'en', false));
 
+        /* header SEARCH timing — MASTER TUNING PANEL (DL_TUNE.search); spin
+           cycle is the CSS var --finder-spin-dur (published by the panel). */
+        const FINDER_PROCESSING_MS = (window.DL_TUNE && window.DL_TUNE.search && window.DL_TUNE.search.processingMs !== undefined)
+            ? window.DL_TUNE.search.processingMs : 1000;
         const finderInput = document.querySelector('.finder__input');
         const finder = document.querySelector('.finder');
         finderInput.addEventListener('focus', () => finder.classList.add('active'));
@@ -4529,7 +4618,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                 finder.classList.remove('processing');
                 finderInput.disabled = false;
                 if (finderInput.value.length > 0) finder.classList.add('active');
-            }, 1000);
+            }, FINDER_PROCESSING_MS);
         });
 
         /* Footer back-to-top button — smooth scroll to page start
@@ -4835,6 +4924,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
         const COOKIE_BANNER_ENABLED = DL_COOKIE_TUNE.enabled !== undefined ? DL_COOKIE_TUNE.enabled : true;   // false = banner never appears at all
         const COOKIE_SCROLL_PCT = DL_COOKIE_TUNE.scrollPct !== undefined ? DL_COOKIE_TUNE.scrollPct : 0.7;    // share of the HERO height scrolled before the banner pops
         const COOKIE_REACH_PAD = DL_COOKIE_TUNE.reachPad !== undefined ? DL_COOKIE_TUNE.reachPad : 48;        // px from the bottom that still counts as "scrolled everything"
+        const COOKIE_SETTLE_ARM_MS = DL_COOKIE_TUNE.settleArmMs !== undefined ? DL_COOKIE_TUNE.settleArmMs : 300;  // boot-settle before the safety nets arm
         const cookieBanner = document.getElementById('cookieBanner');
         if (cookieBanner && COOKIE_BANNER_ENABLED) {
             let cookieConsent = null;
@@ -4888,7 +4978,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                         if (cookieShown) return;
                         floorArmed = true;
                         onCookieScroll();   /* unreachable gate / tiny page → pops now */
-                    }, 300);
+                    }, COOKIE_SETTLE_ARM_MS);
                 });
             }
             /* exit is deliberately FASTER than the graceful entrance (skill rule:
@@ -4934,7 +5024,13 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                if the panel block is ever deleted. ---- */
             const L = (window.DL_TUNE && window.DL_TUNE.servicesLayout) || {};
             const knob = (key, dflt) => (L[key] !== undefined ? L[key] : dflt);
+            const GRID_STAGGER = knob('gridStagger', 18);     // ms cascade per cube in the passive grid
             const STAGGER = knob('stagger', 55);              // ms cascade between rail/tray items
+            const RAIL_DELAY_BASE = knob('railDelayBase', 120);   // base ms before the rail/tray cascade
+            const REVEAL_STAGGER_CAP = knob('revealStaggerCap', 275); // scroll-in reveal cascade cap (ms)
+            const SCROLL_FOLLOW_UP = knob('scrollFollowUpMs', 220);   // first auto-scroll re-check after a morph
+            const VIDEO_LEAD_FRAC = knob('videoLeadFrac', 0.55);      // iframe loads after this share of the morph…
+            const VIDEO_LEAD_MAX = knob('videoLeadMaxMs', 520);       // …but never later than this
             const ITEM_MIN = knob('itemMin', 150);            // smallest passive button (px)
             const ITEM_MAX = knob('itemMax', 240);            // largest passive button (px)
             const COLS_MAX = knob('colsMax', 6);              // max columns in the passive grid
@@ -5218,7 +5314,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                         s.el.style.setProperty('--svc-th', th + 'px');
                         place(s, Math.round(startX + (i % cols) * (itemW + g)),
                               Math.round(Math.floor(i / cols) * (rowH + g)),
-                              Math.round(itemW), Math.round(itemW + th), i * 18);
+                              Math.round(itemW), Math.round(itemW + th), i * GRID_STAGGER);
                     });
                     const rows = Math.ceil(services.length / cols) || 1;
                     viewport.style.height = Math.round(rows * rowH + (rows - 1) * g) + 'px';
@@ -5252,7 +5348,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                         const row = Math.floor(i / TRAY_PER_ROW);
                         place(s, Math.round(W - chipW - col * (chipW + TRAY_GAP)),   // from the RIGHT
                               Math.round(aH + g + row * (rowH + TRAY_GAP)),          // bottom tray under the panel
-                              Math.round(chipW), Math.round(rowH), 120 + i * STAGGER);
+                              Math.round(chipW), Math.round(rowH), RAIL_DELAY_BASE + i * STAGGER);
                     });
                     const trayRows = Math.ceil(flow.length / TRAY_PER_ROW) || 0;
                     const trayH = trayRows ? trayRows * rowH + (trayRows - 1) * TRAY_GAP : 0;
@@ -5289,7 +5385,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                         s.el.style.setProperty('--svc-th', th + 'px');
                         place(s, Math.round(leftPad + activeW + g + (i % railCols) * (railW + g)),
                               Math.round(Math.floor(i / railCols) * (rowH + g)),
-                              Math.round(railW), Math.round(railW + th), 120 + i * STAGGER);
+                              Math.round(railW), Math.round(railW + th), RAIL_DELAY_BASE + i * STAGGER);
                     });
                     const railRows = Math.ceil(flow.length / railCols) || 0;
                     const railH = railRows ? railRows * rowH + (railRows - 1) * g : 0;
@@ -5338,7 +5434,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     s.videoTimer = setTimeout(() => {
                         s.videoTimer = 0;
                         loadServiceVideo(s);
-                    }, Math.min(serviceAnimMs() * TIME_SCALE * 0.55, 520));
+                    }, Math.min(serviceAnimMs() * TIME_SCALE * VIDEO_LEAD_FRAC, VIDEO_LEAD_MAX));
                 }
             }
 
@@ -5618,7 +5714,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     scrollServiceIntoView(s);
                     // The services viewport height also animates. Re-check after it grows so
                     // the browser does not clamp the first scroll before the bottom exists.
-                    setTimeout(() => scrollServiceIntoView(s), 220);
+                    setTimeout(() => scrollServiceIntoView(s), SCROLL_FOLLOW_UP);
                     setTimeout(() => scrollServiceIntoView(s), serviceAnimMs() * TIME_SCALE + 80);
                 });
             }
@@ -5702,7 +5798,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                knob. The delay is decorative only, capped, and cleared right after
                the fade so interactions NEVER wait on it; reduced-motion collapses
                it via the global delay kill-switch.) */
-            const REVEAL_STAGGER_CAP = 275;   /* total cascade stays under ~0.3s even with many items */
+            /* REVEAL_STAGGER_CAP: total cascade stays under ~0.3s even with many items (MASTER TUNING PANEL) */
             const revealObserver = new IntersectionObserver((entries, obs) => {
                 if (!entries.some(entry => entry.isIntersecting)) return;
                 services.forEach((s, i) => {
