@@ -6,9 +6,138 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no, viewport-fit=cover" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#e5e3db" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1d1f27" />
-    <meta name="description" content="Digi-Line — automation services for your business." />
-    <title>Digi-Line</title>
-    <link rel="icon" type="image/png" id="faviconLink" href="favicon.webp">
+    <!-- ════════════════ SEO / AEO CORE ════════════════
+         Primary language is German (see <html lang="de"> + DL_DEFAULT_LANG).
+         Switching the site language also rewrites <title>, the meta description
+         and the OG title/description LIVE (seoMeta map in the main script), so
+         the tab text & share snippets always match the visible content. -->
+    <title>Digi-Line — Automatisierungsdienste für Ihr Business</title>
+    <meta name="description" content="Automatisierung für Ihr Business: Digi-WA verbindet Sie per WhatsApp mit Ihren Kunden, Digi-n8n automatisiert Ihre Workflows — ohne Programmierkenntnisse." />
+    <meta name="author" content="Digi-Line" />
+    <meta name="application-name" content="Digi-Line" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href="https://digi-line.eu/" />
+
+    <!-- ════════════════ OPEN GRAPH (link previews) ════════════════
+         Hero mascot composition (og-image.jpg, 1200×630) = the share card.
+         Social crawlers need ABSOLUTE urls + a JPEG/PNG (WebP previews fail
+         on WhatsApp & several messengers), hence the dedicated og-image.jpg. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Digi-Line" />
+    <meta property="og:url" content="https://digi-line.eu/" />
+    <meta property="og:title" content="Digi-Line — Automatisierungsdienste für Ihr Business" />
+    <meta property="og:description" content="Automatisierung für Ihr Business: Digi-WA verbindet Sie per WhatsApp mit Ihren Kunden, Digi-n8n automatisiert Ihre Workflows — ohne Programmierkenntnisse." />
+    <meta property="og:image" content="https://digi-line.eu/og-image.jpg" />
+    <meta property="og:image:secure_url" content="https://digi-line.eu/og-image.jpg" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Digi-Line Maskottchen — Automatisierungsdienste für Ihr Business" />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:locale:alternate" content="en_US" />
+
+    <!-- ════════════════ TWITTER / X CARD ════════════════ -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Digi-Line — Automatisierungsdienste für Ihr Business" />
+    <meta name="twitter:description" content="Automatisierung für Ihr Business: Digi-WA verbindet Sie per WhatsApp mit Ihren Kunden, Digi-n8n automatisiert Ihre Workflows — ohne Programmierkenntnisse." />
+    <meta name="twitter:image" content="https://digi-line.eu/og-image.jpg" />
+    <meta name="twitter:image:alt" content="Digi-Line Maskottchen — Automatisierungsdienste für Ihr Business" />
+
+    <!-- ════════════════ STRUCTURED DATA (JSON-LD) ════════════════
+         One graph, one set of stable entity IDs (…#organization / #website /
+         #webpage / #logo / #services / #digi-wa / #digi-n8n) — every reference
+         resolves inside this same graph. Valid schema.org: list entries are
+         ListItem objects pointing at their Service, the logo is a shared
+         ImageObject node, and no property is emitted empty. Answer engines
+         (Google AI Overviews, Bing Copilot, voice assistants) quote from here. -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://digi-line.eu/#organization",
+                "name": "Digi-Line",
+                "url": "https://digi-line.eu/",
+                "description": "Automation services for your business — WhatsApp customer connections (Digi-WA) and n8n workflow automation (Digi-n8n).",
+                "logo": { "@id": "https://digi-line.eu/#logo" },
+                "image": { "@id": "https://digi-line.eu/#logo" }
+            },
+            {
+                "@type": "ImageObject",
+                "@id": "https://digi-line.eu/#logo",
+                "url": "https://digi-line.eu/favicon.png",
+                "contentUrl": "https://digi-line.eu/favicon.png",
+                "width": 500,
+                "height": 500,
+                "caption": "Digi-Line logo"
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://digi-line.eu/#website",
+                "url": "https://digi-line.eu/",
+                "name": "Digi-Line",
+                "alternateName": "Digi-Line — Automation Services",
+                "publisher": { "@id": "https://digi-line.eu/#organization" },
+                "inLanguage": ["de", "en"]
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://digi-line.eu/#webpage",
+                "url": "https://digi-line.eu/",
+                "name": "Digi-Line — Automatisierungsdienste für Ihr Business",
+                "alternateName": "Digi-Line — Business Automation Services (WhatsApp & n8n)",
+                "isPartOf": { "@id": "https://digi-line.eu/#website" },
+                "about": { "@id": "https://digi-line.eu/#organization" },
+                "primaryImageOfPage": {
+                    "@type": "ImageObject",
+                    "url": "https://digi-line.eu/og-image.jpg",
+                    "width": 1200,
+                    "height": 630,
+                    "caption": "Digi-Line Maskottchen — Automatisierungsdienste für Ihr Business"
+                },
+                "inLanguage": "de",
+                "description": "Automatisierung für Ihr Business: Digi-WA verbindet Sie per WhatsApp mit Ihren Kunden, Digi-n8n automatisiert Ihre Workflows — ohne Programmierkenntnisse.",
+                "mainEntity": { "@id": "https://digi-line.eu/#services" }
+            },
+            {
+                "@type": "ItemList",
+                "@id": "https://digi-line.eu/#services",
+                "name": "Digi-Line Services",
+                "numberOfItems": 2,
+                "itemListOrder": "https://schema.org/ItemListOrderAscending",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "item": { "@id": "https://digi-line.eu/#digi-wa" } },
+                    { "@type": "ListItem", "position": 2, "item": { "@id": "https://digi-line.eu/#digi-n8n" } }
+                ]
+            },
+            {
+                "@type": "Service",
+                "@id": "https://digi-line.eu/#digi-wa",
+                "name": "Digi-WA",
+                "alternateName": "Digi-WA WhatsApp Integration",
+                "serviceType": "WhatsApp Business Integration",
+                "provider": { "@id": "https://digi-line.eu/#organization" },
+                "url": "https://app.digi-line.eu/digi-wa/",
+                "description": "Connect with your customers on WhatsApp — automated WhatsApp business communication for your company."
+            },
+            {
+                "@type": "Service",
+                "@id": "https://digi-line.eu/#digi-n8n",
+                "name": "Digi-n8n",
+                "alternateName": "Digi-n8n Workflow Automation",
+                "serviceType": "Workflow Automation (n8n)",
+                "provider": { "@id": "https://digi-line.eu/#organization" },
+                "url": "https://app.digi-line.eu/digi-n8n/",
+                "description": "Automate your everyday work with n8n workflow automation — no coding required."
+            }
+        ]
+    }
+    </script>
+
+    <link rel="icon" type="image/webp" id="faviconLink" href="favicon.webp">
+    <link rel="icon" type="image/png" href="favicon.png" sizes="500x500">
+    <link rel="apple-touch-icon" href="favicon.png">
     <link rel="preload" as="image" href="hero.webp" fetchpriority="high">
     <link rel="preload" as="image" href="leaning.webp" fetchpriority="high" media="(min-width: 42.01rem)">
     <link rel="preload" as="image" href="leaning_mobile.webp" fetchpriority="high" media="(max-width: 42rem)">
@@ -66,6 +195,281 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;1,800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- ══════════════════════════════════════════════════════════════════════
+         ★★★   DIGI-LINE — MASTER TUNING PANEL   ★★★
+         EVERY fine-tuning control of the whole page lives HERE, in ONE place.
+         Edit values below — that's it. The matching knobs in the CSS/JS are
+         kept as INERT FALLBACKS (used only if this panel is ever deleted);
+         this panel always wins.
+           • Keep the units/quotes exactly like the shipped defaults.
+           • Numbers stay raw numbers (px/seconds per the comment nearby).
+           • After a LIVE edit you can re-apply without reloading:
+             run dlApplyTuning() in the devtools console.
+         Sections: site · hero · menu · heroControls · services ·
+                   servicesLayout · motion · portal · cookie
+         ══════════════════════════════════════════════════════════════════════ -->
+    <script>
+    (function () {
+        window.DL_TUNE = {
+
+            /* ── SITE DEFAULTS & DESTINATIONS ─────────────────────────── */
+            site: {
+                defaultLang:  'de',      /* first-visit language: 'de' | 'en' */
+                defaultTheme: 'light',   /* first-visit theme: 'light' | 'dark' */
+                menuVisitUrl: 'https://app.digi-line.eu/digi-wa/',  /* hero glass-menu Visit pill destination ('#' = reload demo) */
+                heroYoutube:  { en: 'jfKfPfyJRdk', de: 'jfKfPfyJRdk' } /* hero featured video id per language */
+            },
+
+            /* ── HERO SECTION ──────────────────────────────────────────── */
+            hero: {
+                minHeight:         'calc(100svh - var(--header-h, 4rem))', /* hero height (the real header height is counted in via --header-h) */
+                mascotScale:       160,          /* desktop mascot size (final = value/50 × mascotWidth) */
+                mascotScaleMobile: 170,          /* phone mascot size (final = value/70 × mascotWidth)   */
+                mascotWidth:       'clamp(14rem, 14vw, 28rem)',
+                mascotTop:         'clamp(1rem, 1svh, 6rem)',      /* desktop distance from hero top */
+                mascotTopMobile:   'clamp(13rem, 13svh, 20rem)',   /* phone distance from hero top   */
+                blockPadding:      'clamp(2rem, 5vh, 5rem)',       /* vertical breathing room        */
+                inlinePadding:     'clamp(1rem, 4vw, 5rem)',       /* desktop side padding           */
+                inlinePaddingMobile:'clamp(.75rem, 3vw, 1.25rem)', /* phone side padding             */
+                textMaxWidth:      'min(27rem, 26cqi)',            /* greeting column cap (desktop)  */
+                textMaxWidthMobile:'min(96cqi, 34rem)',            /* greeting column cap (phone)    */
+                textInset:         'clamp(0rem, 1.2cqi, 1.4rem)',  /* desktop gutter beside the text */
+                textInsetMobile:   '.15rem',                       /* phone gutter beside the text   */
+                messageDelay:      '1500ms'                        /* hold time per greeting phase   */
+            },
+
+            /* ── LIQUID GLASS MENU BAR (hero) ──────────────────────────── */
+            menu: {
+                leftDesktop:   'clamp(2rem, 5vw, 6rem)',  bottomDesktop: 'clamp(2rem, 5vh, 5rem)',  scaleDesktop: 0.7,
+                leftMobile:    '1rem',                    bottomMobile:  '1.5rem',                  scaleMobile:  0.4,
+                passiveWidth:  '20rem',  passiveHeight: '8.5rem',  passivePadding: '1.5rem',
+                loadingSize:   '7.5rem',
+                activeWidth:   '46rem',  activeHeight:  '39rem',   activePadding:  '2.25rem',
+                visitHeight:   '3.2rem', visitRadius:   '2rem',
+                passiveGap:    '1.25rem', textGap: '0rem', titleSize: '1.25rem', subtitleSize: '0.9rem', imgSize: '5.5rem',
+                borderRadius:  '2.25rem',
+                transitionDuration: '0.75s',   /* spring morph speed between states */
+                transitionEase:     'var(--ease-spring)',
+                loadingDelay:  '1600ms',       /* how long the loading cube shows before becoming the rectangle */
+                entranceDelay: '1300ms',       /* delay before the menu appears on page load */
+                fadeDuration:  '0.5s'          /* initial fade-in speed */
+            },
+
+            /* ── MOBILE HERO CONTROLS (theme pair / language popup, ≤42rem) ── */
+            heroControls: {
+                rise:            '.9rem',  /* entrance: how far below their spot the buttons start */
+                enterDur:        '.55s',   /* entrance rise duration (spring curve) */
+                langMenuGap:     '.55rem', /* gap between language button and its up-opening list */
+                langMenuStagger: '65ms'    /* rise cascade between language items */
+            },
+
+            /* ── SERVICES SECTION (mascot+title unit, cubes, panel) ────── */
+            services: {
+                ease:       'cubic-bezier(.22, 1, .36, 1)', /* morph curve (used when motion.useSpring = false) */
+                btnRadius:   'clamp(1rem, 1.5vw, 1.4rem)',
+                panelRadius: '1.75rem',
+                btnPadding:  '12px',          /* inner spacing of the passive cube */
+                panelGap:    '12px',          /* vertical rhythm inside the OPEN panel */
+                captionSize: '13px',          /* in-cube caption font-size */
+                captionLines: 2,              /* in-cube caption max lines */
+                captionGap:   '8px',
+                sectionBlockPadding:  'clamp(3rem, 9vh, 9.5rem)',
+                sectionInlinePadding: 'clamp(.9rem, 4vw, 4rem)',
+                /* fused mascot+title unit (desktop) */
+                unitOffsetX: '0px', unitOffsetY: '10px', unitScale: 1, unitTilt: '0deg',
+                titleFontSize: 'clamp(2rem, 8vw, 4.5rem)',
+                mascotRelSize: 3.8,   /* mascot width  = titleFontSize × this */
+                mascotRelGapX: 2,     /* title indent  = titleFontSize × this */
+                mascotRelY:   -1.4,   /* mascot top    = titleFontSize × this (negative = hangs above) */
+                mascotDesktopScale: 1.5,
+                buttonsDesktopLeft: 0.2,  /* passive buttons never enter this share of the screen's left */
+                mascotDesktopLeft: 'clamp(1.5rem, 4.0vw, 4rem)',
+                /* fused unit (phone ≤42rem) */
+                titleMobileFontSize: 'clamp(2rem, 8vw, 2.75rem)',
+                mascotMobileRelSize: 4.2, mascotMobileRelGapX: -100, mascotMobileRelY: -1.2, mascotMobileScale: 1,
+                unitMobileOffsetX: '0px', unitMobileOffsetY: '0px', unitMobileScale: 1
+            },
+
+            /* ── SERVICES LAYOUT ENGINE (JS — sizes, tray, rails, video) ─ */
+            servicesLayout: {
+                stagger:      55,    /* ms cascade between rail/tray items */
+                itemMin:      150,   /* smallest passive cube (px) */
+                itemMax:      240,   /* largest passive cube (px)  */
+                colsMax:      6,     /* max passive grid columns   */
+                railMin:      96,    /* smallest desktop rail button while one is open (px) */
+                activeShare:  0.8,   /* desktop: open panel's share of the width from the left */
+                activeLeftPad: 12,   /* open panel's own little left padding (px) */
+                passiveMaxW:  1200,  /* width cap for the passive grid area (px, ≈75rem) */
+                trayPerRow:   4,     /* PHONE: tray chips per row under an open panel */
+                trayGap:      14,    /* PHONE: gap between tray chips (px) */
+                ytParams:     '?autoplay=1&mute=0&enablejsapi=1&rel=0'  /* YouTube embed params */
+            },
+
+            /* ── MOTION / ANIMATION (the service morph engine) ─────────── */
+            motion: {
+                svcAnimMs: 780,     /* base FLIP morph duration in ms                     */
+                timeScale: 1,       /* GLOBAL speed multiplier — 2 = twice as slow, 0.5 = twice as fast.
+                                       Because the morph is a sampled physics curve, it stays
+                                       perfectly smooth even at timeScale 1000 (0.1% speed).   */
+                useSpring: true,    /* true = physics spring morph; false = services.ease bezier.
+                                       Springs auto-fall back to the bezier on old browsers.   */
+                spring: {
+                    mass: 1,        /* heavier = lazier, longer swing    */
+                    stiffness: 170, /* higher = snappier                 */
+                    damping: 26,    /* higher = less overshoot/wobble    */
+                    samples: 48     /* curve resolution (16–120; more = silkier easing) */
+                },
+                textFadeMs: 180,    /* how fast texts fade OUT when a morph starts (fade-IN uses CSS defaults) */
+                morphGuardExtraMs: 420  /* safety cleanup window after the last card lands */
+            },
+
+            /* ── VISIT PORTAL (full-screen transition after Visit) ─────── */
+            portal: {
+                triggerMs: 300,  /* pause after the click before anything moves */
+                popMs:     200,  /* spring pop of the pressed pill              */
+                expandMs:  400,  /* screen-cover expansion                      */
+                fadeMs:    200,  /* loader-handoff veil fade-in                 */
+                popScale:  1.08, /* pop size multiplier                          */
+                popEase:    'cubic-bezier(.34,1.56,.64,1)',
+                expandEase: 'cubic-bezier(.77,0,.175,1)',
+                fadeEase:   'cubic-bezier(.23,1,.32,1)',
+                reloadFallback: true  /* data-visit="#" → animate, then reload THIS page */
+            },
+
+            /* ── COOKIE CONSENT BANNER ─────────────────────────────────── */
+            cookie: {
+                enabled:   true,  /* false = banner never appears */
+                scrollPct: 0.7,   /* pops after this share of the HERO is scrolled (0.7 = 70%) */
+                showDelay: '1.2s',/* slide-in delay once triggered  */
+                slideDur:  '.8s', /* slide speed (in & out)         */
+                width: 'min(26rem, calc(100vw - 2rem))',
+                gap:   '.55rem'
+            }
+        };
+
+        /* ═════════════════ DON'T EDIT BELOW — application machinery ═══════ */
+        const root = document.documentElement;
+        const setV = (el, name, val) => { if (el && val !== undefined && val !== null) el.style.setProperty(name, String(val)); };
+
+        /* Physics spring → CSS linear() easing: a CONTINUOUS sampled curve, so
+           the morph reads as perfectly smooth at ANY timeScale. */
+        const springCache = {};
+        window.dlSpringSupported = !!(window.CSS && CSS.supports && CSS.supports('transition-timing-function', 'linear(0, 1)'));
+        window.dlSpringEasing = function () {
+            const cfg = (window.DL_TUNE.motion && window.DL_TUNE.motion.spring) || {};
+            const mass = cfg.mass ?? 1, stiffness = cfg.stiffness ?? 170, damping = cfg.damping ?? 26;
+            const samples = Math.max(16, Math.min(120, cfg.samples ?? 48));
+            const key = [mass, stiffness, damping, samples].join('/');
+            if (springCache[key]) return springCache[key];
+            const sub = 8, n = samples * sub, dt = 1 / n;
+            let x = 0, v = 0, settledAt = n;
+            const pts = ['0 0%'];
+            for (let i = 1; i <= n; i++) {
+                v += ((-stiffness * (x - 1) - damping * v) / mass) * dt;
+                x += v * dt;
+                if (i % sub === 0) pts.push(x.toFixed(5) + ' ' + (i / n * 100).toFixed(2) + '%');
+                if (Math.abs(x - 1) < 0.0005 && Math.abs(v) < 0.005) { settledAt = i; break; }
+            }
+            pts.push('1 ' + Math.min(100, settledAt / n * 100).toFixed(2) + '%', '1 100%');
+            return (springCache[key] = 'linear(' + pts.join(', ') + ')');
+        };
+
+        /* :root-scoped knobs (inline here beats the stylesheet's :root rules).
+           Runs at boot AND is folded into dlApplyTuning() so LIVE edits to the
+           menu / hero-controls / cookie sections repaint too. */
+        function applyTuningRoot() {
+            const T = window.DL_TUNE, m = T.menu || {}, hc = T.heroControls || {}, c = T.cookie || {};
+            const map = {
+                '--menu-left-desktop': m.leftDesktop, '--menu-bottom-desktop': m.bottomDesktop, '--menu-scale-desktop': m.scaleDesktop,
+                '--menu-left-mobile': m.leftMobile, '--menu-bottom-mobile': m.bottomMobile, '--menu-scale-mobile': m.scaleMobile,
+                '--menu-passive-width': m.passiveWidth, '--menu-passive-height': m.passiveHeight, '--menu-passive-padding': m.passivePadding,
+                '--menu-loading-size': m.loadingSize,
+                '--menu-active-width': m.activeWidth, '--menu-active-height': m.activeHeight, '--menu-active-padding': m.activePadding,
+                '--menu-visit-height': m.visitHeight, '--menu-visit-radius': m.visitRadius,
+                '--menu-passive-gap': m.passiveGap, '--menu-text-gap': m.textGap,
+                '--menu-title-size': m.titleSize, '--menu-subtitle-size': m.subtitleSize, '--menu-img-size': m.imgSize,
+                '--menu-border-radius': m.borderRadius,
+                '--menu-transition-duration': m.transitionDuration, '--menu-transition-ease': m.transitionEase,
+                '--menu-loading-delay': m.loadingDelay, '--menu-entrance-delay': m.entranceDelay, '--menu-fade-duration': m.fadeDuration,
+                '--hero-controls-rise': hc.rise, '--hero-controls-enter-dur': hc.enterDur,
+                '--hero-lang-menu-gap': hc.langMenuGap, '--hero-lang-menu-stagger': hc.langMenuStagger,
+                '--cookie-show-delay': c.showDelay, '--cookie-slide-dur': c.slideDur, '--cookie-width': c.width, '--cookie-gap': c.gap
+            };
+            Object.entries(map).forEach(([k, v]) => setV(root, k, v));
+        }
+        applyTuningRoot();
+
+        /* Element-scoped + breakpoint-dependent knobs. Called once by the boot
+           script (DOM exists by then) and on every phone/desktop breakpoint flip.
+           dlApplyTuning() is also your LIVE "repaint my edits" console command. */
+        window.dlApplyTuning = function () {
+            const T = window.DL_TUNE; if (!T) return;
+            applyTuningRoot();
+            const isPhone = window.matchMedia('(max-width: 42rem)').matches;
+            const heroEl = document.querySelector('.hero');
+            const svcEl  = document.querySelector('.services');
+            const h = T.hero || {};
+            if (heroEl) {
+                setV(heroEl, '--hero-min-height', h.minHeight);
+                setV(heroEl, '--mascot-scale', h.mascotScale);
+                setV(heroEl, '--mascot-scale-mobile', h.mascotScaleMobile);
+                setV(heroEl, '--mascot-width', h.mascotWidth);
+                setV(heroEl, '--mascot-top', isPhone ? h.mascotTopMobile : h.mascotTop);
+                setV(heroEl, '--hero-block-padding', h.blockPadding);
+                setV(heroEl, '--hero-inline-padding', isPhone ? h.inlinePaddingMobile : h.inlinePadding);
+                setV(heroEl, '--hero-text-inset', isPhone ? h.textInsetMobile : h.textInset);
+                setV(heroEl, '--hero-text-max-width', isPhone ? h.textMaxWidthMobile : h.textMaxWidth);
+                setV(heroEl, '--message-delay', h.messageDelay);
+            }
+            const s = T.services || {};
+            if (svcEl) {
+                setV(svcEl, '--svc-btn-radius', s.btnRadius);
+                setV(svcEl, '--svc-panel-radius', s.panelRadius);
+                setV(svcEl, '--svc-btn-padding', s.btnPadding);
+                setV(svcEl, '--svc-panel-gap', s.panelGap);
+                setV(svcEl, '--svc-caption-size', s.captionSize);
+                setV(svcEl, '--svc-caption-lines', s.captionLines);
+                setV(svcEl, '--svc-caption-gap', s.captionGap);
+                setV(svcEl, '--services-section-block-padding', s.sectionBlockPadding);
+                setV(svcEl, '--services-section-inline-padding', s.sectionInlinePadding);
+                setV(svcEl, '--mascot-title-offset-x', s.unitOffsetX);
+                setV(svcEl, '--mascot-title-offset-y', s.unitOffsetY);
+                setV(svcEl, '--mascot-title-scale', s.unitScale);
+                setV(svcEl, '--mascot-title-tilt', s.unitTilt);
+                setV(svcEl, '--services-title-font-size', s.titleFontSize);
+                setV(svcEl, '--services-mascot-rel-size', s.mascotRelSize);
+                setV(svcEl, '--services-mascot-rel-gap-x', s.mascotRelGapX);
+                setV(svcEl, '--services-mascot-rel-y', s.mascotRelY);
+                setV(svcEl, '--services-mascot-desktop-scale', s.mascotDesktopScale);
+                setV(svcEl, '--services-buttons-desktop-left', s.buttonsDesktopLeft);
+                setV(svcEl, '--services-mascot-desktop-left', s.mascotDesktopLeft);
+                setV(svcEl, '--services-title-mobile-font-size', s.titleMobileFontSize);
+                setV(svcEl, '--services-mascot-mobile-rel-size', s.mascotMobileRelSize);
+                setV(svcEl, '--services-mascot-mobile-rel-gap-x', s.mascotMobileRelGapX);
+                setV(svcEl, '--services-mascot-mobile-rel-y', s.mascotMobileRelY);
+                setV(svcEl, '--services-mascot-mobile-scale', s.mascotMobileScale);
+                setV(svcEl, '--mascot-title-mobile-offset-x', s.unitMobileOffsetX);
+                setV(svcEl, '--mascot-title-mobile-offset-y', s.unitMobileOffsetY);
+                setV(svcEl, '--mascot-title-mobile-scale', s.unitMobileScale);
+            }
+            /* motion → timing tokens (published as real CSS vars so pure-CSS
+               transitions like the viewport height use the exact same curve) */
+            const mo = T.motion || {};
+            if (svcEl && mo.svcAnimMs != null) setV(svcEl, '--svc-dur', (mo.svcAnimMs / 1000) + 's');
+            if (svcEl && mo.textFadeMs != null) setV(svcEl, '--svc-textfade', (mo.textFadeMs / 1000) + 's');
+            if (svcEl) {
+                if (mo.useSpring && window.dlSpringSupported && window.dlSpringEasing) {
+                    const spr = window.dlSpringEasing();
+                    setV(root, '--dl-spring', spr);
+                    setV(svcEl, '--svc-ease', spr);        /* resolved string — JS & CSS read the same curve */
+                } else {
+                    setV(svcEl, '--svc-ease', s.ease);
+                }
+            }
+        };
+    })();
+    </script>
 
     <style>
         :root {
@@ -781,9 +1185,32 @@
             container-type: inline-size;
         }
 
-        /* === HERO FINETUNING CONTROLS === */
+        /* Screen-reader-only / crawlable-but-invisible block — used for the
+           SEO/AEO <h1>. Keeps content accessible without visual clutter. */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* === HERO FINETUNING CONTROLS ===
+           ↔ VALUES LIVE IN THE MASTER TUNING PANEL (head of this file, DL_TUNE.hero)
+           — edit there; the literals below are inert fallbacks. === */
         .hero {
-            --hero-min-height: calc(100svh - 4rem);
+            /* Hero + the in-flow header together = EXACTLY 100% of any screen:
+               the hero's bottom edge lands precisely on the screen border.
+               --header-h is the REAL header height, measured and exposed by JS
+               (lockHeroHeight) — the header is fluid (clamp units + wrapping),
+               so 4rem here is just the no-JS ballpark. The JS lock reads THIS
+               knob and freezes its resolved px value — edit here, both follow. */
+            --hero-min-height: calc(100svh - var(--header-h, 4rem));
             --mascot-scale: 160;
             --mascot-scale-mobile: 170;
             --mascot-active-scale: calc(var(--mascot-scale) / 50);
@@ -806,7 +1233,11 @@
             isolation: isolate;
             position: relative;
             display: grid;
+            /* Viewport-height ladder: plain vh fallback → the --hero-min-height
+               knob (svh-based, 100% at any screen) → JS freezes the knob's
+               resolved value in px so mobile chrome can't re-adjust it. */
             height: 100vh;
+            height: 100svh;
             height: var(--hero-min-height);
             overflow: clip;
             color: var(--hero-ink);
@@ -867,7 +1298,8 @@
             grid-column: 1;
             inline-size: 100%;
             min-inline-size: 0;
-            max-inline-size: none;
+            /* fine-tuning knob — caps the greeting column on wide screens */
+            max-inline-size: var(--hero-text-max-width);
             margin-inline-end: auto;
             padding-inline-end: var(--hero-text-inset);
             font-family: "Barlow Condensed", "Arial Narrow", sans-serif;
@@ -877,6 +1309,7 @@
             letter-spacing: clamp(-.045em, -.025em, -.012em);
             line-height: .78;
             text-wrap: wrap;
+            text-wrap: pretty;   /* nicer rag on supported engines — no lonely words, cleaner line breaks */
             word-break: break-word;
             overflow-wrap: anywhere;
             hyphens: auto;
@@ -894,6 +1327,12 @@
             text-align: end;
             justify-self: stretch;
             margin-inline: 0;
+            /* right text edge tracks the services buttons' screen-right gap
+               (--dl-services-edge — measured & published by the services layout
+               JS), so the hero's right text sits at the EXACT same distance from
+               the screen edge as the service buttons. Pre-JS fallback = 0 shift
+               (the stage's own inline padding keeps ruling). */
+            margin-inline-end: max(0px, var(--dl-services-edge, var(--hero-inline-padding)) - var(--hero-inline-padding));
             padding-inline: var(--hero-text-inset) 0;
         }
 
@@ -917,6 +1356,7 @@
 
         /* ==========================================================================
            LIQUID GLASS MENU BAR IN HERO SECTION (FINE-TUNING CONTROLS)
+           ↔ VALUES LIVE IN THE MASTER TUNING PANEL (DL_TUNE.menu) — fallbacks only.
            ========================================================================== */
         :root {
             /* Desktop Position & Scaling */
@@ -1325,7 +1765,10 @@
 
         @container (max-width: 42rem) {
             .hero {
-                --hero-text-max-width: min(42cqi, 15rem);
+                /* phone cap for the greeting — near-full-width by default so it
+                   matches the centered one-column layout; tighten the cqi share
+                   (e.g. 60cqi) to force the words into a narrower stack */
+                --hero-text-max-width: min(96cqi, 34rem);
                 --hero-inline-padding: clamp(.75rem, 3vw, 1.25rem);
                 --hero-text-inset: .15rem;
                 --mascot-active-scale: calc(var(--mascot-scale-mobile) / 70);
@@ -1333,7 +1776,7 @@
             }
             .hero__stage { grid-template-columns: minmax(0, 1fr); grid-template-rows: 1fr; align-content: start; }
             .hero__copy { grid-column: 1; grid-row: 1; grid-template-columns: 1fr; align-self: start; }
-            .hero__message, .hero__message--right { grid-column: 1; grid-row: 1; inline-size: 100%; max-inline-size: 100%; margin-inline: 0; padding-inline: 0; text-align: center; }
+            .hero__message, .hero__message--right { grid-column: 1; grid-row: 1; inline-size: 100%; max-inline-size: var(--hero-text-max-width); margin-inline: auto; padding-inline: 0; text-align: center; }
             .hero__message--right { display: none; }
             .hero__mascot { width: min(var(--mascot-width), 72cqi); }
 
@@ -1391,8 +1834,10 @@
             bottom: calc(var(--menu-bottom-desktop) + env(safe-area-inset-bottom, 0px));
         }
 
-        /* Viewport-height ladder: vh → svh (stable on scroll) → JS px LOCK */
-        .hero { height: 100svh; height: var(--hero-min-height); }
+        /* Viewport-height ladder: vh → svh (stable on scroll) → JS px LOCK.
+           The JS lock measures --hero-min-height (100svh = 100% of ANY screen)
+           and freezes THAT — the CSS knob stays the single source of truth. */
+        .hero { height: 100vh; height: 100svh; height: var(--hero-min-height); }
 
         /* Touch devices: suppress "sticky hover" button states */
         @media (hover: none) {
@@ -1582,7 +2027,7 @@
            Shadows come from the HERO's own background tokens (--hero-shadow-*),
            not the header tokens — the buttons blend with the page's theme.
            ========================================================================== */
-        :root {
+        :root { /* ↔ VALUES LIVE IN THE MASTER TUNING PANEL (DL_TUNE.heroControls) */
             /* — mobile hero-controls entrance fine-tuning — */
             --hero-controls-rise: .9rem;      /* how far below their final spot they start */
             --hero-controls-enter-dur: .55s;  /* entrance rise duration (spring curve) */
@@ -1783,6 +2228,7 @@
             --svc-caption-gap: 8px;    /* gap between the image and the in-button title */
 
             /* === SERVICES MASCOT / TITLE FINE-TUNING CONTROLS ===
+               ↔ VALUES LIVE IN THE MASTER TUNING PANEL (DL_TUNE.services) — fallbacks only. ===
                Image relative paths are in the HTML below: src="leaning.webp".
                Desktop: mascot + title are FUSED inside .services__mascot-title-group
                and scale in LOCKSTEP — every mascot measurement (width, horizontal
@@ -1962,7 +2408,10 @@
             margin-inline-start: calc(-1 * var(--services-section-inline-padding));
             margin-inline-end: 0;
             overflow: visible; /* allow neumorphic shadows to breathe outside the card bounds */
-            transition: height .35s var(--ease-out);
+            /* the viewport's height travels on the SAME duration & curve as the
+               card morph (var-driven from the MASTER TUNING PANEL), so the
+               footer shadow-chase below is one coherent motion, not a chase */
+            transition: height var(--svc-dur, .78s) var(--svc-ease, var(--ease-out));
         }
 
         @media (max-width: 42rem) {
@@ -2000,7 +2449,24 @@
            promote cards just-in-time, and fade titles quickly so glyphs never
            render stretched mid-scale. Everything returns to normal right after. */
         .services__viewport.is-morphing .service { will-change: transform; }
-        .services__viewport.is-morphing .service__title { opacity: 0; transition-duration: .18s; }
+        /* During a FLIP morph only transform + opacity are allowed to animate:
+           paint-heavy transitions (border-radius, box-shadow, borders) snap to
+           their final values INSTANTLY instead of interpolating per frame —
+           this is what keeps the morph butter-smooth even on weak GPUs.
+           Texts (outside titles + in-cube captions) fade out fast at the start
+           and fade back in when the transition completes (JS drops .is-morphing
+           when the last card lands). Fade speed = MASTER TUNING PANEL knob. */
+        .services__viewport.is-morphing .service__btn,
+        .services__viewport.is-morphing .service__media,
+        .services__viewport.is-morphing .service__title,
+        .services__viewport.is-morphing .service__caption {
+            transition-property: opacity !important;
+        }
+        .services__viewport.is-morphing .service__title,
+        .services__viewport.is-morphing .service__caption {
+            opacity: 0;
+            transition-duration: var(--svc-textfade, .18s);
+        }
 
         /* Scroll-reveal: hidden until the viewport scrolls into view (see the
            IntersectionObserver below), then each cube fades in using the exact
@@ -2156,6 +2622,32 @@
         .services__viewport.has-active .service:not(.is-active) .service__title {
             font-size: 11px;
             padding-top: 8px;
+        }
+
+        @media (max-width: 42rem) {
+            /* PHONE TRAY (a service is open): inactive services are small chips
+               under the panel — picture-only inside the cube (the short name
+               lives under it), tighter padding so the image fills the chip. */
+            .services__viewport.has-active .service:not(.is-active) .service__btn {
+                padding: 7px;
+                --svc-caption-gap: 0px;
+                border-width: 2px;
+                border-radius: clamp(.7rem, 3vw, 1rem);
+            }
+            .services__viewport.has-active .service:not(.is-active) .service__caption {
+                display: none;
+            }
+            .services__viewport.has-active .service:not(.is-active) .service__title {
+                font-size: 10px;
+                padding-top: 5px;
+                /* tray titles scale down to AT MOST 2 lines — cleanly clamped;
+                   the layout engine measures THIS height (titleBlockH) and spaces
+                   every row by the LONGEST title, so nothing ever overlaps */
+                display: -webkit-box;
+                -webkit-box-orient: vertical;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+            }
         }
 
         .service.is-active .service__title {
@@ -2522,7 +3014,7 @@
            sits above content without any overlay/backdrop, and disappears for good
            once answered (localStorage "dl-cookie-consent" = accepted | declined).
            ========================================================================== */
-        :root {
+        :root { /* ↔ VALUES LIVE IN THE MASTER TUNING PANEL (DL_TUNE.cookie) */
             /* — cookie banner fine-tuning — */
             --cookie-show-delay: 1.2s;     /* slide-in delay after the boot reveal */
             --cookie-slide-dur: .8s;       /* slide speed (in & out) */
@@ -3018,6 +3510,9 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
 
     <main id="mainContent" tabindex="-1">
         <section class="hero" aria-labelledby="heroGreeting">
+            <!-- Crawlable page headline for SEO/AEO + screen readers — the visible
+                 greeting is decorative/dynamic; this carries the keywords. -->
+            <h1 class="sr-only" data-i18n="heroH1">Digi-Line — Automation services for your business</h1>
             <div class="hero__stage">
                 <div class="hero__copy" aria-live="polite" aria-atomic="true">
                     <p class="hero__message" id="heroGreeting"></p>
@@ -3312,6 +3807,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             en: {
                 services: "Services",
                 partnerWithUs: "Partner with us",
+                heroH1: "Digi-Line — Automation services for your business",
                 contact: "Contact",
                 aboutUs: "About Us",
                 serviceOne: "Service One",
@@ -3348,6 +3844,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             de: {
                 services: "Dienstleistungen",
                 partnerWithUs: "Partner werden",
+                heroH1: "Digi-Line — Automatisierungsdienste für Ihr Unternehmen",
                 contact: "Kontakt",
                 aboutUs: "Über uns",
                 serviceOne: "Dienstleistung Eins",
@@ -3383,10 +3880,41 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             }
         };
 
+        /* SEO/AEO LIVE-SYNC — the static <head> ships in German (the site
+           default); when the visitor switches language, the document head
+           follows so tab text, descriptions and share snippets always match
+           the visible content. (Social crawlers don't run JS — they always
+           get the German defaults above, which is intentional.) */
+        const seoMeta = {
+            en: {
+                title: "Digi-Line — Business Automation Services (WhatsApp & n8n)",
+                description: "Business automation made simple: Digi-WA connects you with your customers on WhatsApp, Digi-n8n automates your everyday workflows — no coding required.",
+                ogTitle: "Digi-Line — Business Automation Services (WhatsApp & n8n)",
+                ogDescription: "Business automation made simple: Digi-WA connects you with your customers on WhatsApp, Digi-n8n automates your everyday workflows — no coding required."
+            },
+            de: {
+                title: "Digi-Line — Automatisierungsdienste für Ihr Business",
+                description: "Automatisierung für Ihr Business: Digi-WA verbindet Sie per WhatsApp mit Ihren Kunden, Digi-n8n automatisiert Ihre Workflows — ohne Programmierkenntnisse.",
+                ogTitle: "Digi-Line — Automatisierungsdienste für Ihr Business",
+                ogDescription: "Automatisierung für Ihr Business: Digi-WA verbindet Sie per WhatsApp mit Ihren Kunden, Digi-n8n automatisiert Ihre Workflows — ohne Programmierkenntnisse."
+            }
+        };
+
         function applyTranslation(lang) {
             const strings = i18nData[lang] || i18nData.en;
             document.documentElement.setAttribute('lang', lang);
             try { localStorage.setItem('dl-lang', lang); } catch (_) { /* private mode */ }
+            /* head meta follows the active language (see seoMeta above) */
+            const seo = seoMeta[lang] || seoMeta.en;
+            if (seo) {
+                document.title = seo.title;
+                const setMeta = (sel, val) => { const m = document.querySelector(sel); if (m) m.setAttribute('content', val); };
+                setMeta('meta[name="description"]', seo.description);
+                setMeta('meta[property="og:title"]', seo.ogTitle);
+                setMeta('meta[property="og:description"]', seo.ogDescription);
+                setMeta('meta[name="twitter:title"]', seo.ogTitle);
+                setMeta('meta[name="twitter:description"]', seo.ogDescription);
+            }
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 // Menu text is synced separately, to the exact midpoint of its loading animation.
                 if (glassMenu && glassMenu.contains(el)) return;
@@ -3441,11 +3969,12 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
         /* HERO TEXT & MENU TRIGGER SEQUENCING */
         let heroSequenceTimer;
         let heroSequenceId = 0;
-        /* Featured-video dub per language: add/edit ids here — the same pattern
-           as data-youtube / data-youtube-de on the services below. Switching
-           language while this video is open auto-swaps it live (see
-           refreshHeroVideoLang(), called from applyTranslation()). */
-        const HERO_YOUTUBE_ID = { en: 'jfKfPfyJRdk', de: 'jfKfPfyJRdk' };
+        /* Featured-video dub per language — ids live in the MASTER TUNING PANEL
+           (DL_TUNE.site.heroYoutube); fallback below only fires if the panel is
+           deleted. Switching language while the video is open auto-swaps it live
+           (see refreshHeroVideoLang(), called from applyTranslation()). */
+        const HERO_YOUTUBE_ID = (window.DL_TUNE && window.DL_TUNE.site && window.DL_TUNE.site.heroYoutube)
+                                || { en: 'jfKfPfyJRdk', de: 'jfKfPfyJRdk' };
         function heroYoutubeEmbedUrl() {
             const l = document.documentElement.lang === 'de' ? 'de' : 'en';
             const id = HERO_YOUTUBE_ID[l] || HERO_YOUTUBE_ID.en;
@@ -3597,10 +4126,11 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             }
         });
 
-        /* ==== HERO MENU VISIT PILL — FINE-TUNING ====
-           Destination of the glass menu's Visit button. "#" (default) = reload
-           THIS page — full portal animation demo until a real URL is set. */
-        const MENU_VISIT_URL = 'https://app.digi-line.eu/digi-wa/';
+        /* ==== HERO MENU VISIT PILL — destination lives in the MASTER TUNING
+           PANEL (DL_TUNE.site.menuVisitUrl); fallback below only fires if the
+           panel is deleted. "#" = reload THIS page (portal animation demo). */
+        const MENU_VISIT_URL = (window.DL_TUNE && window.DL_TUNE.site && window.DL_TUNE.site.menuVisitUrl)
+                               || 'https://app.digi-line.eu/digi-wa/';
         /* The glass Visit pill runs the SAME portal transition as the service
            Visit buttons (identical timing/curve knobs, shared via
            window.dlPortalNavigate) — but its screen cover is the SOLID
@@ -3619,23 +4149,51 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             });
         }
 
-        /* ==== SITE DEFAULTS — the deterministic first-visit state ====
+        /* ==== SITE DEFAULTS — read from the MASTER TUNING PANEL (DL_TUNE.site);
+           the fallbacks here only fire if the panel block is deleted.
            (A saved choice in localStorage always wins; these are what a brand-new
-           visitor gets. Change here = change the whole site's default.) */
-        const DL_DEFAULT_LANG = 'de';      /* default page language            */
-        const DL_DEFAULT_THEME = 'light';  /* default theme (no OS sniffing —  *
-                                            *  the default must be EXACT)      */
+           visitor gets. Change the panel = change the whole site's default.) */
+        const DL_DEFAULT_LANG  = (window.DL_TUNE && window.DL_TUNE.site && window.DL_TUNE.site.defaultLang)  || 'de';
+        const DL_DEFAULT_THEME = (window.DL_TUNE && window.DL_TUNE.site && window.DL_TUNE.site.defaultTheme) || 'light';
+
+        /* Apply the MASTER TUNING PANEL's element-scoped knobs BEFORE anything
+           measures the hero (the height lock below reads --hero-min-height).
+           Re-applied automatically whenever the phone/desktop breakpoint flips. */
+        if (window.dlApplyTuning) {
+            window.dlApplyTuning();
+            const dlTuningMq = window.matchMedia('(max-width: 42rem)');
+            if (dlTuningMq.addEventListener) dlTuningMq.addEventListener('change', window.dlApplyTuning);
+            else if (dlTuningMq.addListener) dlTuningMq.addListener(window.dlApplyTuning);
+        }
 
         /* HERO HEIGHT LOCK — real phones resize 100dvh when the browser chrome
            (URL bar) hides/shows on scroll, which visibly re-adjusts the hero.
-           Freeze the hero to the initial REAL viewport height in px, and only
-           re-freeze on genuine size changes (width change / rotation) — never
+           IMPORTANT: this lock does NOT pick its own height anymore — it reads
+           the CSS fine-tuning knob --hero-min-height (currently 100svh = 100% of
+           ANY screen), resolves it against the REAL viewport, then freezes THAT
+           in px. The CSS knob is the single source of truth; the lock only
+           re-freezes on genuine size changes (width change / rotation) — never
            from the address bar collapsing. */
         (function lockHeroHeight() {
             const hero = document.querySelector('.hero');
             if (!hero) return;
-            const apply = () => { hero.style.height = window.innerHeight + 'px'; };
+            const header = document.getElementById('siteHeader');
+            const apply = () => {
+                /* Count the header INTO the 100%: publish its real rendered height
+                   as --header-h so the CSS knob calc(100svh - var(--header-h)) lands
+                   the hero's bottom edge on the EXACT screen border. */
+                const headerH = header ? header.getBoundingClientRect().height : 0;
+                if (header) document.documentElement.style.setProperty('--header-h', headerH + 'px');
+                /* Drop the inline lock so the stylesheet's --hero-min-height
+                   computes freely, measure what the knob resolves to on THIS
+                   viewport, then pin exactly that in px. */
+                hero.style.height = '';
+                const h = hero.getBoundingClientRect().height || (window.innerHeight - headerH);
+                hero.style.height = h + 'px';
+            };
             apply();
+            /* webfonts arriving can nudge the header's height — re-count once */
+            if (document.fonts && document.fonts.ready) document.fonts.ready.then(apply);
             let lastW = document.documentElement.clientWidth;
             window.addEventListener('resize', () => {
                 const w = document.documentElement.clientWidth;
@@ -4236,26 +4794,48 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
         requestAnimationFrame(checkFit);
 
         /* ==== COOKIE CONSENT BANNER — FINE-TUNING ====
-           Quiet & polite: slides in from the LEFT along the bottom edge after
-           the boot reveal; no overlay/backdrop, never blocks the site, and once
-           answered it is remembered FOREVER (localStorage "dl-cookie-consent" =
-           "accepted" | "declined"); it never pops up again.
+           Quiet & polite: slides in from the LEFT along the bottom edge once the
+           visitor has scrolled COOKIE_SCROLL_PCT of the HERO section (default 0.7
+           = 70% down the hero); no overlay/backdrop, never blocks the site, and
+           once answered it is remembered FOREVER (localStorage "dl-cookie-consent"
+           = "accepted" | "declined"); it never pops up again.
            Re-show for testing: localStorage.removeItem('dl-cookie-consent').
-           Slide texture knobs: --cookie-show-delay / --cookie-slide-dur in CSS. */
-        const COOKIE_BANNER_ENABLED = true;   // false = banner never appears at all
+           Values come from the MASTER TUNING PANEL (DL_TUNE.cookie); the
+           fallbacks here only fire if the panel is deleted. */
+        const DL_COOKIE_TUNE = (window.DL_TUNE && window.DL_TUNE.cookie) || {};
+        const COOKIE_BANNER_ENABLED = DL_COOKIE_TUNE.enabled !== undefined ? DL_COOKIE_TUNE.enabled : true;   // false = banner never appears at all
+        const COOKIE_SCROLL_PCT = DL_COOKIE_TUNE.scrollPct !== undefined ? DL_COOKIE_TUNE.scrollPct : 0.7;    // share of the HERO height scrolled before the banner pops
         const cookieBanner = document.getElementById('cookieBanner');
         if (cookieBanner && COOKIE_BANNER_ENABLED) {
             let cookieConsent = null;
             try { cookieConsent = localStorage.getItem('dl-cookie-consent'); } catch (_) { /* private mode → ask every visit */ }
             if (!cookieConsent) {
-                (window.dlBootReady || Promise.resolve()).then(() => {
-                    cookieBanner.hidden = false;
-                    /* two frames so the hidden→visible change is applied before the
-                       transition starts (else the slide-in would be skipped) */
-                    requestAnimationFrame(() => requestAnimationFrame(() =>
-                        cookieBanner.classList.add('is-visible')
-                    ));
-                });
+                const heroEl = document.querySelector('.hero');
+                /* hero height is px-locked by lockHeroHeight — 0.7 × it = 70% scrolled
+                   down past the hero section on ANY display */
+                let cookieShown = false;
+                const showCookieBanner = () => {
+                    if (cookieShown) return;
+                    cookieShown = true;
+                    (window.dlBootReady || Promise.resolve()).then(() => {
+                        cookieBanner.hidden = false;
+                        /* two frames so the hidden→visible change is applied before the
+                           transition starts (else the slide-in would be skipped) */
+                        requestAnimationFrame(() => requestAnimationFrame(() =>
+                            cookieBanner.classList.add('is-visible')
+                        ));
+                    });
+                };
+                const onCookieScroll = () => {
+                    const heroH = heroEl ? (heroEl.getBoundingClientRect().height || 0) : 0;
+                    const threshold = (heroH || window.innerHeight) * COOKIE_SCROLL_PCT;
+                    if ((window.scrollY || document.documentElement.scrollTop || 0) >= threshold) {
+                        window.removeEventListener('scroll', onCookieScroll);
+                        showCookieBanner();
+                    }
+                };
+                window.addEventListener('scroll', onCookieScroll, { passive: true });
+                onCookieScroll();   /* a reload mid-page jumps straight past the threshold */
             }
             cookieBanner.querySelectorAll('[data-cookie-choice]').forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -4286,16 +4866,27 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             const viewport = document.getElementById('servicesViewport');
             if (!viewport) return;
 
-            /* ---- fine-tuning knobs ---- */
-            const STAGGER = 55;              // ms cascade between rail items
-            const ITEM_MIN = 150;            // smallest passive button (px)
-            const ITEM_MAX = 240;            // largest passive button (px)
-            const COLS_MAX = 6;              // max columns in the passive grid
-            const RAIL_MIN = 96;             // smallest rail button while one is active
-            const ACTIVE_SHARE = 0.8;        // active panel width share from the left
-            const YT_PARAMS = '?autoplay=1&mute=0&enablejsapi=1&rel=0';
-            const ACTIVE_LEFT_PAD = 12;      // an open panel hugs the display's left edge; this is its own small padding (px) so the neumorphic shadow isn't clipped
-            const PASSIVE_MAX_W = 1200;      // ≈75rem: legacy width cap for the passive grid area
+            /* ---- fine-tuning knobs — values come from the MASTER TUNING PANEL
+               (DL_TUNE.servicesLayout); the numbers here are only the fallbacks
+               if the panel block is ever deleted. ---- */
+            const L = (window.DL_TUNE && window.DL_TUNE.servicesLayout) || {};
+            const knob = (key, dflt) => (L[key] !== undefined ? L[key] : dflt);
+            const STAGGER = knob('stagger', 55);              // ms cascade between rail/tray items
+            const ITEM_MIN = knob('itemMin', 150);            // smallest passive button (px)
+            const ITEM_MAX = knob('itemMax', 240);            // largest passive button (px)
+            const COLS_MAX = knob('colsMax', 6);              // max columns in the passive grid
+            const RAIL_MIN = knob('railMin', 96);             // smallest rail button while one is active (DESKTOP only)
+            const ACTIVE_SHARE = knob('activeShare', 0.8);    // active panel width share from the left
+            const TRAY_PER_ROW = knob('trayPerRow', 4);       // PHONE: tray chips per row under an open panel (extras wrap to a new right-aligned row)
+            const TRAY_GAP = knob('trayGap', 14);             // PHONE: aesthetic gap between tray chips (px)
+            const YT_PARAMS = knob('ytParams', '?autoplay=1&mute=0&enablejsapi=1&rel=0');
+            const ACTIVE_LEFT_PAD = knob('activeLeftPad', 12);      // an open panel hugs the display's left edge; this is its own small padding (px) so the neumorphic shadow isn't clipped
+            const PASSIVE_MAX_W = knob('passiveMaxW', 1200);  // ≈75rem: legacy width cap for the passive grid area
+            /* motion knobs (same pattern, panel section DL_TUNE.motion) */
+            const MO = (window.DL_TUNE && window.DL_TUNE.motion) || {};
+            const TIME_SCALE = (MO.timeScale !== undefined ? MO.timeScale : 1);          // global FLIP speed multiplier
+            const USE_SPRING = (MO.useSpring !== undefined ? MO.useSpring : true);       // physics spring morph on/off
+            const MORPH_GUARD_EXTRA = (MO.morphGuardExtraMs !== undefined ? MO.morphGuardExtraMs : 420);
 
             const mqMobile = window.matchMedia('(max-width: 42rem)');
 
@@ -4359,6 +4950,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                 const svc = {
                     id: 'svc-' + idx, el, data,
                     btnEl: el.querySelector('.service__btn'),
+                    mediaEl: el.querySelector('.service__media'),
                     captionEl: el.querySelector('.service__caption'),
                     titleEl: el.querySelector('.service__title'),
                     panelEl: el.querySelector('.service__panel'),
@@ -4368,6 +4960,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     visitEl: el.querySelector('.service__visit'),
                     videoTimer: 0,
                     flipAnimation: null,
+                    mediaFlip: null,
                     animDelay: 0,
                     tx: 0,
                     ty: 0
@@ -4483,9 +5076,14 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             }
 
             /* ---- measurement helpers ---- */
-            function titleBlockH() {
+            /* Height reserved under each button for its title — driven by the
+               LONGEST title so every row keeps even, non-overlapping distances.
+               excludeId skips the ACTIVE card (its title is hidden — it must not
+               inflate the rail/tray reserve). */
+            function titleBlockH(excludeId) {
                 let max = 20;
                 services.forEach(s => {
+                    if (s.id === excludeId) return;
                     const cs = getComputedStyle(s.titleEl);
                     max = Math.max(max, s.titleEl.offsetHeight + (parseFloat(cs.marginTop) || 0));
                 });
@@ -4535,7 +5133,22 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     let itemW = (availW - (cols - 1) * g) / cols;
                     if (itemW > ITEM_MAX) itemW = ITEM_MAX;
                     const gridW = cols * itemW + (cols - 1) * g;
-                    const startX = Math.max(minX, (W - gridW) / 2);   // centered, but never inside the 20% zone
+                    /* CENTER TO THE SCREEN, not to the viewport box — the viewport
+                       spans from the display's left edge to (100vw − right padding),
+                       so (W − gridW)/2 used to park the group a few rem LEFT of the
+                       true optical center. (minX no-touchy zone still wins.)
+                       The resulting right-edge gap is ALSO published as
+                       --dl-services-edge: the hero's right text inset mirrors it,
+                       so both sections share the SAME screen-edge rhythm. */
+                    const vpLeft = viewport.getBoundingClientRect().left || 0;
+                    const startX = Math.max(minX, Math.round((window.innerWidth - gridW) / 2 - vpLeft));
+                    const edgeGap = Math.max(0, Math.round(window.innerWidth - (vpLeft + startX + gridW)));
+                    document.documentElement.style.setProperty('--dl-services-edge', edgeGap + 'px');
+                    /* give every seat its FINAL width BEFORE the title measure —
+                       titles are absolute and wrap-dependent; on the very first
+                       layout they were measured at width 0 (one word per line),
+                       which produced the giant bottom gap before the footer */
+                    services.forEach(s => { s.el.style.width = Math.round(itemW) + 'px'; });
                     const th = titleBlockH();
                     const rowH = itemW + th;
                     services.forEach((s, i) => {
@@ -4548,36 +5161,44 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     viewport.style.height = Math.round(rows * rowH + (rows - 1) * g) + 'px';
                 } else if (mqMobile.matches) {
                     /* PHONE active mode: the open panel takes the ENTIRE screen width
-                       (16:9 video inside gets real watching height), and the remaining
-                       services flow into a rail BELOW the panel — the same rail math
-                       as desktop, just rotated to horizontal flow. */
-                    const th = titleBlockH();
+                       (16:9 video inside gets real watching height). The remaining
+                       services — no matter how many — organize as a BOTTOM TRAY under
+                       the panel: RELATIVE chips, always a quarter-share of the screen
+                       (TRAY_PER_ROW slots are assumed even when fewer services are
+                       left, so a lone leftover still gets a large comfortable chip),
+                       aligned to the RIGHT with an even aesthetic gap. Row reserve
+                       uses the LONGEST tray title (titleBlockH), and overflow beyond
+                       TRAY_PER_ROW wraps to the next right-aligned row. Every chip
+                       stays fully toggleable — tapping it swaps the active service
+                       exactly like the old rail did. */
                     const act = get(activeId);
                     const activeW = W;
+                    const flow = order.filter(id => id !== activeId);
+                    const chipW = Math.max(0, (W - (TRAY_PER_ROW - 1) * TRAY_GAP) / TRAY_PER_ROW);
+                    /* pin chips to their FINAL width first, then measure how tall
+                       the longest title really wraps — never at a stale width */
+                    flow.forEach(id => { get(id).el.style.width = Math.round(chipW) + 'px'; });
+                    const th = titleBlockH(activeId);
                     const aH = activePanelH(act, activeW);
                     place(act, 0, 0, activeW, aH, 0);
-                    const flow = order.filter(id => id !== activeId);
-                    let railCols = Math.max(1, Math.floor((W + g) / (RAIL_MIN + g)));
-                    railCols = Math.min(railCols, 3, Math.max(flow.length, 1));
-                    const railW = railCols ? (W - (railCols - 1) * g) / railCols : 0;
-                    const rowH = railW + th;
+                    const rowH = chipW + th;
                     flow.forEach((id, i) => {
                         const s = get(id);
                         s.el.style.setProperty('--svc-th', th + 'px');
-                        place(s, Math.round((i % railCols) * (railW + g)),
-                              Math.round(aH + g + Math.floor(i / railCols) * (rowH + g)),
-                              Math.round(railW), Math.round(railW + th), 120 + i * STAGGER);
+                        const col = i % TRAY_PER_ROW;
+                        const row = Math.floor(i / TRAY_PER_ROW);
+                        place(s, Math.round(W - chipW - col * (chipW + TRAY_GAP)),   // from the RIGHT
+                              Math.round(aH + g + row * (rowH + TRAY_GAP)),          // bottom tray under the panel
+                              Math.round(chipW), Math.round(rowH), 120 + i * STAGGER);
                     });
-                    const railRows = Math.ceil(flow.length / railCols) || 0;
-                    const railH = railRows ? railRows * rowH + (railRows - 1) * g : 0;
-                    viewport.style.height = railRows ? Math.round(aH + g + railH) + 'px'
-                                                     : Math.round(aH) + 'px';
+                    const trayRows = Math.ceil(flow.length / TRAY_PER_ROW) || 0;
+                    const trayH = trayRows ? trayRows * rowH + (trayRows - 1) * TRAY_GAP : 0;
+                    viewport.style.height = (trayRows ? Math.round(aH + g + trayH) : Math.round(aH)) + 'px';
                 } else {
                     /* DESKTOP active mode: the open panel DROPS the passive grid's screen
                        margin — it scales from the display's very left edge (only its own
                        small ACTIVE_LEFT_PAD padding), taking ~80% of the full-bleed width.
                        Everyone else flows into a right rail with max 2 columns. */
-                    const th = titleBlockH();
                     const leftPad = ACTIVE_LEFT_PAD;
                     let share = ACTIVE_SHARE;
                     let activeW = Math.round((W - leftPad) * share);
@@ -4590,10 +5211,15 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     let railCols = railSpace >= 2 * RAIL_MIN + g ? 2 : 1;
                     railCols = Math.min(railCols, Math.max(services.length - 1, 1));
                     const railW = Math.max((railSpace - (railCols - 1) * g) / railCols, 0);
+                    const flow = order.filter(id => id !== activeId);
+                    /* real rail widths first, THEN measure the longest rail title
+                       (wrap-dependent absolute boxes — measuring at a stale width
+                       under/over-reserves the title block) */
+                    flow.forEach(id => { get(id).el.style.width = Math.round(railW) + 'px'; });
+                    const th = titleBlockH(activeId);
                     const act = get(activeId);
                     const aH = activePanelH(act, activeW);
                     place(act, leftPad, 0, activeW, aH, 0);
-                    const flow = order.filter(id => id !== activeId);
                     const rowH = railW + th;
                     flow.forEach((id, i) => {
                         const s = get(id);
@@ -4649,7 +5275,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     s.videoTimer = setTimeout(() => {
                         s.videoTimer = 0;
                         loadServiceVideo(s);
-                    }, Math.min(serviceAnimMs() * 0.55, 520));
+                    }, Math.min(serviceAnimMs() * TIME_SCALE * 0.55, 520));
                 }
             }
 
@@ -4676,22 +5302,43 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                 services.forEach(s => {
                     first.set(s.id, s.el.getBoundingClientRect());
                     if (s.flipAnimation) { s.flipAnimation.cancel(); s.flipAnimation = null; }
+                    if (s.mediaFlip) { s.mediaFlip.cancel(); s.mediaFlip = null; }
+                    /* hand every moving card (and its picture) its own GPU layer
+                       for the WHOLE flight — this is the butter-smoothness:
+                       zero main-thread rasterization while the spring runs. */
+                    s.el.style.willChange = 'transform';
+                    if (s.mediaEl) s.mediaEl.style.willChange = 'transform';
                 });
 
                 mutator();
                 layout();
 
-                const duration = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 1 : serviceAnimMs();
-                const easing = serviceEase();
+                const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                /* duration = panel base × global speed multiplier; the easing is the
+                   sampled PHYSICS SPRING (continuous curve — smooth even slowed to
+                   a crawl), falling back to the bezier on unsupported browsers. */
+                const duration = reduced ? 1 : serviceAnimMs() * TIME_SCALE;
+                const easing = (!reduced && USE_SPRING && window.dlSpringSupported && window.dlSpringEasing)
+                    ? window.dlSpringEasing()
+                    : serviceEase();
+
+                const clearWillChange = () => services.forEach(s => {
+                    s.el.style.willChange = '';
+                    if (s.mediaEl) s.mediaEl.style.willChange = '';
+                });
 
                 viewport.classList.add('is-morphing');
-                let morphGuard = setTimeout(() => viewport.classList.remove('is-morphing'), duration + 420);
+                let morphGuard = setTimeout(() => {
+                    viewport.classList.remove('is-morphing');
+                    clearWillChange();
+                }, duration + MORPH_GUARD_EXTRA + 180 /* max stagger cap */);
 
                 let running = 0;
                 const settle = () => {
                     if (running > 0 && --running === 0) {
                         clearTimeout(morphGuard);
                         viewport.classList.remove('is-morphing');
+                        clearWillChange();
                     }
                 };
 
@@ -4719,6 +5366,24 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     ], { duration, delay, easing, fill: 'both' });
                     s.flipAnimation = anim;
 
+                    /* SEAMLESS PICTURE SCALE — the card's FLIP scale is non-uniform
+                       (sx≠sy: square cube → wide panel), which used to rubber-stretch
+                       the picture. The picture counter-scales by the inverse ratio,
+                       so its NET scale is the SAME on both axes (geometric mean = the
+                       least overshoot either way): the eye reads one uniform zoom
+                       while the box around it morphs shape. */
+                    if (s.mediaEl) {
+                        const u = Math.sqrt(sx * sy);
+                        s.mediaFlip = s.mediaEl.animate([
+                            { transform: 'scale(' + (u / sx) + ',' + (u / sy) + ')', transformOrigin: '50% 50%' },
+                            { transform: 'scale(1,1)', transformOrigin: '50% 50%' }
+                        ], { duration, delay, easing, fill: 'both' });
+                        s.mediaFlip.finished.then(() => {
+                            if (s.mediaFlip) { s.mediaFlip.cancel(); s.mediaFlip = null; }
+                            if (s.mediaEl) s.mediaEl.style.transform = '';
+                        }, () => { /* cancelled — a newer morph already owns the media */ });
+                    }
+
                     anim.finished.then(() => {
                         if (s.flipAnimation === anim) {
                             anim.cancel();   // release the fill, then rest on the plain translate
@@ -4730,7 +5395,11 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     }, settle);
                 });
 
-                if (running === 0) { clearTimeout(morphGuard); viewport.classList.remove('is-morphing'); }
+                if (running === 0) {
+                    clearTimeout(morphGuard);
+                    viewport.classList.remove('is-morphing');
+                    clearWillChange();
+                }
             }
 
             function scrollServiceIntoView(s, behavior = 'smooth') {
@@ -4777,16 +5446,20 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                Transform/opacity only → GPU smooth.
                Destination-page skeleton: once the target page design is provided,
                skin .service-portal's background here. */
-            /* ==== VISIT PORTAL — FINE-TUNING KNOBS (edit freely) ==== */
-            const PORTAL_TRIGGER_MS = 300;                          // 0→300ms: pause after the click
-            const PORTAL_POP_MS = 200;                              // 300→500ms: spring pop duration
-            const PORTAL_EXPAND_MS = 400;                           // 500→900ms: screen-fill duration
-            const PORTAL_FADE_MS = 200;                             // 900→1100ms: loader-handoff veil fade-IN
-            const PORTAL_POP_SCALE = 1.08;                          // pop size multiplier
-            const PORTAL_POP_EASE = 'cubic-bezier(.34,1.56,.64,1)';     // pop curve (bounce/spring)
-            const PORTAL_EXPAND_EASE = 'cubic-bezier(.77,0,.175,1)';    // cover-screen curve
-            const PORTAL_FADE_EASE = 'cubic-bezier(.23,1,.32,1)';       // veil fade curve
-            const PORTAL_RELOAD_FALLBACK = true;  // data-visit="#" → animate, then reload THIS page
+            /* ==== VISIT PORTAL — values come from the MASTER TUNING PANEL
+               (DL_TUNE.portal); the literals here are only the fallbacks if the
+               panel block is ever deleted. ==== */
+            const P = (window.DL_TUNE && window.DL_TUNE.portal) || {};
+            const pk = (key, dflt) => (P[key] !== undefined ? P[key] : dflt);
+            const PORTAL_TRIGGER_MS = pk('triggerMs', 300);                          // 0→300ms: pause after the click
+            const PORTAL_POP_MS = pk('popMs', 200);                                  // 300→500ms: spring pop duration
+            const PORTAL_EXPAND_MS = pk('expandMs', 400);                            // 500→900ms: screen-fill duration
+            const PORTAL_FADE_MS = pk('fadeMs', 200);                                // 900→1100ms: loader-handoff veil fade-IN
+            const PORTAL_POP_SCALE = pk('popScale', 1.08);                           // pop size multiplier
+            const PORTAL_POP_EASE = pk('popEase', 'cubic-bezier(.34,1.56,.64,1)');   // pop curve (bounce/spring)
+            const PORTAL_EXPAND_EASE = pk('expandEase', 'cubic-bezier(.77,0,.175,1)'); // cover-screen curve
+            const PORTAL_FADE_EASE = pk('fadeEase', 'cubic-bezier(.23,1,.32,1)');    // veil fade curve
+            const PORTAL_RELOAD_FALLBACK = pk('reloadFallback', true);  // data-visit="#" → animate, then reload THIS page
             /* ======================================================== */
 
             function portalNavigate(url, sourceEl, coverColor) {
@@ -4883,7 +5556,7 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
                     // The services viewport height also animates. Re-check after it grows so
                     // the browser does not clamp the first scroll before the bottom exists.
                     setTimeout(() => scrollServiceIntoView(s), 220);
-                    setTimeout(() => scrollServiceIntoView(s), serviceAnimMs() + 80);
+                    setTimeout(() => scrollServiceIntoView(s), serviceAnimMs() * TIME_SCALE + 80);
                 });
             }
 
@@ -4939,6 +5612,25 @@ rotate(-90) translate(-20,-20.5) translate(12,8)" />
             viewport.classList.add('no-anim', 'pre-reveal');
             layout();
             requestAnimationFrame(() => requestAnimationFrame(() => viewport.classList.remove('no-anim')));
+
+            /* FIRST-LOAD CORRECTNESS — the very first layout() above measures the
+               title blocks with FALLBACK fonts (Barlow/Plus Jakarta haven't swapped
+               in yet) and, on some engines, before first paint settles: the reserved
+               heights come out wrong and the FOOTER lands a big gap below the
+               section until any resize "snaps" it back. Recompute silently the
+               moment fonts settle and again at full load — same relayout the
+               resizer runs, without it the user only sees the fixed values. */
+            const relayoutSettled = () => {
+                if (viewport.classList.contains('is-morphing')) return;   // never fight a user morph
+                layout();
+            };
+            if (document.fonts && document.fonts.ready) {
+                document.fonts.ready.then(relayoutSettled);
+                /* some browsers resolve fonts.ready before the swap paints — one
+                   follow-up frame catches the swapped-in metrics too */
+                document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(relayoutSettled)));
+            }
+            window.addEventListener('load', relayoutSettled, { once: true });
 
             /* Scroll-reveal: fade the cubes in, staggered, the first time the
                services section enters the viewport — never again after that. */
